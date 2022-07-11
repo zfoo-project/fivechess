@@ -33,5 +33,6 @@ orm:
 net:
   id: netConfig
   protocol-location: protocol.xml
-  javascript-protocol: true
+  typescript-protocol: true
   fold-protocol: true
+  protocol-path: ../fivechess-client/assets/scripts
