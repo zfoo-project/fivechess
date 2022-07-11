@@ -1,0 +1,8 @@
+{
+  "engine": "cocos-creator-js",
+  "packages": "packages",
+  "name": "fivechess-client",
+  "id": "5af7fc2d-1276-4f9d-95ea-b18e123907aa",
+  "version": "2.4.5",
+  "isNew": false
+}

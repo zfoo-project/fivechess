@@ -1,0 +1,38 @@
+storage:
+  id: storageManager
+  scan:
+    package: com.zfoo.fivechess.common.**.resource
+  resource:
+    location: classpath:/excel
+
+orm:
+  id: mongodbConfig
+  entity-package: com.zfoo.fivechess.common.**.entity
+  host:
+    database: tank
+    user:
+    password:
+    address:
+      - 127.0.0.1:27017
+  caches:
+    - strategy: hundred
+      size: 100
+      expire-millisecond: 600000
+    - strategy: tenThousand
+      size: 10000
+      expire-millisecond: 600000
+  persisters:
+    - strategy: cron30s
+      type: cron
+      config: 0/30 * * * * ?
+    - strategy: time30s
+      type: time
+      config: 30000
+
+
+net:
+  id: netConfig
+  protocol-location: protocol.xml
+  csharp-protocol: false
+  javascript-protocol: false
+  fold-protocol: true
