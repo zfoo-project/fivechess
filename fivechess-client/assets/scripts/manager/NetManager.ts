@@ -1,6 +1,8 @@
 import ProtocolManager from "./../tsProtocol/ProtocolManager";
 import ByteBuffer from "./../tsProtocol/buffer/ByteBuffer";
-import Ping from "./../tsProtocol/common/Ping";
+import ResponseManager from "./ResponseManager";
+import EventManager from "./EventManager";
+import {EventConfig} from "../config/EventConfig";
 
 const {ccclass, property} = cc._decorator;
 
@@ -10,6 +12,9 @@ enum State {
     CONNECTED = 3,   // 已连接
 }
 
+/**
+ * 负责网络连接处理
+ */
 @ccclass
 export default class NetManager extends cc.Component {
 
@@ -37,9 +42,6 @@ export default class NetManager extends cc.Component {
         if (this.state != State.DISCONNECT) {
             return;
         }
-
-        // 注册下自己
-        // this.registerNet(this);
 
         // 网络处理
         this.state = State.CONNECTING;
@@ -121,11 +123,9 @@ export default class NetManager extends cc.Component {
      */
     private onOpen(event) {
         console.log('connect success!!!');
-
         this.state = State.CONNECTED;
 
-        // TODO TEST
-        this.sendMessage(new Ping());
+        EventManager.inst().sendEvent(EventConfig.CONNECTED_EVENT, null);
     }
 
     /**
@@ -169,6 +169,10 @@ export default class NetManager extends cc.Component {
 
         let packet = this.msgQueue.shift();
 
+        // 先是全局消息进行处理同步好服务器数据
+        ResponseManager.processResponse(packet.protocolId(), packet);
+
+        // 处理各个handler
         for (let i = 0; i < this.responseHandlerList.length; i++) {
             if (this.responseHandlerList[i].processResponse == null) {
                 cc.error("handler must implement processResponse interface!!!");

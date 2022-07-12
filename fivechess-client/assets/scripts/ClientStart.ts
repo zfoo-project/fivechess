@@ -1,5 +1,7 @@
 import NetManager from "./manager/NetManager";
-import Pong from "./tsProtocol/common/Pong";
+import EventManager from "./manager/EventManager";
+import {EventConfig} from "./config/EventConfig";
+import SceneManager from "./manager/SceneManager";
 
 const {ccclass, property} = cc._decorator;
 
@@ -9,26 +11,17 @@ export default class ClientStart extends cc.Component {
     private url: string = "ws://192.168.3.2:18000/websocket";
 
     onLoad() {
-        NetManager.inst().registerNet(this);
-
+        EventManager.inst().registerEvent(this);
         NetManager.inst().connect(this.url);
     }
 
     onDestroy() {
-        NetManager.inst().unregisterNet(this);
+        EventManager.inst().unregisterEvent(this);
     }
 
-    onPong(msg: Pong) {
-        cc.log(msg.time);
-    }
-
-    processResponse(protocolId, packet) {
-        switch (protocolId) {
-            case Pong.prototype.protocolId():
-                this.onPong(packet);
-                break;
-            default:
-                break;
+    processEvent(eventId, event) {
+        if (eventId == EventConfig.CONNECTED_EVENT) {
+            SceneManager.loadScene("Login");
         }
     }
 }
