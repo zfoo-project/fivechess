@@ -24,13 +24,8 @@ export default class LoginScene extends cc.Component {
     }
 
     processResponse(protocolId, packet) {
-        switch (protocolId) {
-            case Pong.prototype.protocolId():
-                this.onPong(packet);
-                break;
-            default:
-                break;
+        if (protocolId == Pong.prototype.protocolId()) {
+            this.onPong(packet);
         }
     }
-
 }
