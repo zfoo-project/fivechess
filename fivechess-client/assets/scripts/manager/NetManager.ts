@@ -17,11 +17,10 @@ enum State {
  */
 @ccclass
 export default class NetManager extends cc.Component {
-
     private state: State = State.DISCONNECT;
     private socket: WebSocket = null;
     private msgQueue = [];
-    private isLock: boolean = false;
+    private _isLock: boolean = false;
     private static _inst: NetManager = null;
     private responseHandlerList = [];
 
@@ -82,20 +81,6 @@ export default class NetManager extends cc.Component {
         cc.log("send:", packet);
     }
 
-    /**
-     * 锁定消息队列，避免切场景消息丢失
-     */
-    public lockMsgQueue() {
-        this.isLock = true;
-    }
-
-    /**
-     * 打开消息队列，一般是start里面调用
-     */
-    public unLockMsgQueue() {
-        this.isLock = false;
-    }
-
     public registerNet(handler) {
         for (let i = 0; i < this.responseHandlerList.length; i++) {
             if (this.responseHandlerList[i] == handler) {
@@ -115,6 +100,13 @@ export default class NetManager extends cc.Component {
         }
     }
 
+    /**
+     * 这个不可在业务中调用，仅仅是SceneManager内部封装切场景使用，避免切场景时收到消息而没处理
+     * @param value
+     */
+    public setLock(value: boolean) {
+        this._isLock = value;
+    }
 
     /**
      * 连上服务器
@@ -159,7 +151,7 @@ export default class NetManager extends cc.Component {
     }
 
     update(dt: number) {
-        if (this.isLock) {
+        if (this._isLock) {
             return;
         }
 
