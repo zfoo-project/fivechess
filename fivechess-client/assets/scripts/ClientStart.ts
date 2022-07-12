@@ -18,13 +18,16 @@ export default class ClientStart extends cc.Component {
         NetManager.inst().unregisterNet(this);
     }
 
-    processResponse(packet) {
-        switch (packet.protocolId()) {
+    onPong(msg: Pong) {
+        cc.log(msg.time);
+    }
+
+    processResponse(protocolId, packet) {
+        switch (protocolId) {
             case Pong.prototype.protocolId():
-                
+                this.onPong(packet);
                 break;
             default:
-
                 break;
         }
     }

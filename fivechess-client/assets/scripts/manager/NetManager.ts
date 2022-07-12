@@ -170,13 +170,11 @@ export default class NetManager extends cc.Component {
         let packet = this.msgQueue.shift();
 
         for (let i = 0; i < this.responseHandlerList.length; i++) {
-            // handler 必须实现的方法
-            let cb = this.responseHandlerList[i].processResponse;
-            if (cb == null) {
+            if (this.responseHandlerList[i].processResponse == null) {
                 cc.error("handler must implement processResponse interface!!!");
                 continue;
             }
-            cb(packet);
+            this.responseHandlerList[i].processResponse(packet.protocolId(), packet);
         }
     }
 }
