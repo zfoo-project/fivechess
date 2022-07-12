@@ -1,6 +1,6 @@
-import ProtocolManager from "./../../tsProtocol/ProtocolManager";
-import ByteBuffer from "./../../tsProtocol/buffer/ByteBuffer";
-import Ping from "./../../tsProtocol/common/Ping";
+import ProtocolManager from "./../tsProtocol/ProtocolManager";
+import ByteBuffer from "./../tsProtocol/buffer/ByteBuffer";
+import Ping from "./../tsProtocol/common/Ping";
 
 const {ccclass, property} = cc._decorator;
 
@@ -18,6 +18,7 @@ export default class NetManager extends cc.Component {
     private msgQueue = [];
     private isLock: boolean = false;
     private static _inst: NetManager = null;
+    private responseHandlerList = [];
 
     public static inst(): NetManager {
         if (NetManager._inst == null) {
@@ -37,6 +38,10 @@ export default class NetManager extends cc.Component {
             return;
         }
 
+        // 注册下自己
+        // this.registerNet(this);
+
+        // 网络处理
         this.state = State.CONNECTING;
         this.socket = new WebSocket(url);
         this.socket.binaryType = 'arraybuffer';
@@ -89,13 +94,33 @@ export default class NetManager extends cc.Component {
         this.isLock = false;
     }
 
+    public registerNet(handler) {
+        for (let i = 0; i < this.responseHandlerList.length; i++) {
+            if (this.responseHandlerList[i] == handler) {
+                return;
+            }
+        }
+
+        this.responseHandlerList.push(handler);
+    }
+
+    public unregisterNet(handler) {
+        for (let i = 0; i < this.responseHandlerList.length; i++) {
+            if (this.responseHandlerList[i] == handler) {
+                this.responseHandlerList.splice(i, 1);
+                return;
+            }
+        }
+    }
+
+
     /**
      * 连上服务器
      * @param event
      * @private
      */
     private onOpen(event) {
-        console.log('websocket open success');
+        console.log('connect success!!!');
 
         this.state = State.CONNECTED;
 
@@ -142,9 +167,12 @@ export default class NetManager extends cc.Component {
             return;
         }
 
-        let msg = this.msgQueue.shift();
+        let packet = this.msgQueue.shift();
 
         // TODO 将消息队列中的包派发出去,业务逻辑进行处理
+        for (let i = 0; i < this.responseHandlerList.length; i++) {
+            this.responseHandlerList[i].processResponse();
+        }
     }
 
 }

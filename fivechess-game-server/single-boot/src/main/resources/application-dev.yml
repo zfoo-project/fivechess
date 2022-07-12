@@ -35,4 +35,4 @@ net:
   protocol-location: protocol.xml
   typescript-protocol: true
   fold-protocol: true
-  protocol-path: ../fivechess-client/assets
+  protocol-path: ../fivechess-client/assets/scripts
