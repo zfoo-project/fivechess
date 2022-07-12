@@ -57,7 +57,7 @@ export default class NetManager extends cc.Component {
      */
     public sendMessage(packet) {
         if (this.state != State.CONNECTED) {
-            cc.error("only send on CONNECTED!!!");
+            cc.error("only can send msg on CONNECTED status!!!");
             return;
         }
 
@@ -169,10 +169,14 @@ export default class NetManager extends cc.Component {
 
         let packet = this.msgQueue.shift();
 
-        // TODO 将消息队列中的包派发出去,业务逻辑进行处理
         for (let i = 0; i < this.responseHandlerList.length; i++) {
-            this.responseHandlerList[i].processResponse();
+            // handler 必须实现的方法
+            let cb = this.responseHandlerList[i].processResponse;
+            if (cb == null) {
+                cc.error("handler must implement processResponse interface!!!");
+                continue;
+            }
+            cb(packet);
         }
     }
-
 }
