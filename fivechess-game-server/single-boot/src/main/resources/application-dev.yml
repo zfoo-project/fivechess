@@ -9,7 +9,7 @@ orm:
   id: mongodbConfig
   entity-package: com.zfoo.fivechess.common.**.entity
   host:
-    database: tank
+    database: fivechess
     user:
     password:
     address:
@@ -28,7 +28,6 @@ orm:
     - strategy: time30s
       type: time
       config: 30000
-
 
 net:
   id: netConfig

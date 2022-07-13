@@ -15,7 +15,7 @@
         <protocol id="24" location="com.zfoo.net.core.gateway.model.GatewaySynchronizeSidAsk"/>
     </module>
 
-    <module id="2" name="common" minId="100" maxId="1000">
+    <module id="2" name="common" minId="100" maxId="200">
         <protocol id="100" location="com.zfoo.net.packet.common.Message"/>
         <protocol id="101" location="com.zfoo.net.packet.common.Error"/>
         <protocol id="102" location="com.zfoo.net.packet.common.Heartbeat"/>
@@ -28,11 +28,10 @@
         <protocol id="114" location="com.zfoo.net.packet.common.TripleLong"/>
         <protocol id="115" location="com.zfoo.net.packet.common.TripleString"/>
         <protocol id="116" location="com.zfoo.net.packet.common.TripleLSS"/>
+    </module>
 
-
-<!--        <protocol id="400" location="com.zfoo.tank.common.protocol.common.PlayerInfo"/>-->
-<!--        <protocol id="401" location="com.zfoo.tank.common.protocol.common.CurrencyVo"/>-->
-<!--        <protocol id="402" location="com.zfoo.tank.common.protocol.common.RankInfo"/>-->
-
+    <module id="3" name="fiveChessHome" minId="201" maxId="1000">
+        <protocol id="201" location="com.zfoo.fivechess.common.protocol.login.LoginRequest"/>
+        <protocol id="202" location="com.zfoo.fivechess.common.protocol.login.LoginResponse"/>
     </module>
 </protocols>

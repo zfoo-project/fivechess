@@ -114,7 +114,7 @@ export default class NetManager extends cc.Component {
      * @private
      */
     private onOpen(event) {
-        console.log('connect success!!!');
+        console.log('connect to server success!!!');
         this.state = State.CONNECTED;
 
         EventManager.inst().sendEvent(EventConfig.CONNECTED_EVENT, null);
