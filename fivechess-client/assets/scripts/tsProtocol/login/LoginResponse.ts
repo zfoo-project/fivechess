@@ -2,8 +2,9 @@
 
 class LoginResponse {
 
+    account: string = '';
+    coin: number = 0;
     uid: number = 0;
-    unick: string = '';
 
     protocolId(): number {
         return 202;
@@ -17,8 +18,9 @@ class LoginResponse {
             return;
         }
 
+        buffer.writeString(packet.account);
+        buffer.writeInt(packet.coin);
         buffer.writeLong(packet.uid);
-        buffer.writeString(packet.unick);
     }
 
     static read(buffer: any): LoginResponse | null {
@@ -26,10 +28,12 @@ class LoginResponse {
             return null;
         }
         const packet = new LoginResponse();
-        const result0 = buffer.readLong();
-        packet.uid = result0;
-        const result1 = buffer.readString();
-        packet.unick = result1;
+        const result0 = buffer.readString();
+        packet.account = result0;
+        const result1 = buffer.readInt();
+        packet.coin = result1;
+        const result2 = buffer.readLong();
+        packet.uid = result2;
         return packet;
     }
 }

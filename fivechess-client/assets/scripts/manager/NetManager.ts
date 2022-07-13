@@ -32,8 +32,7 @@ export default class NetManager extends cc.Component {
         }
         return NetManager._inst;
     }
-
-
+    
     /**
      * 连接服务器
      */
@@ -134,7 +133,7 @@ export default class NetManager extends cc.Component {
         const packet = ProtocolManager.read(byteBuffer);
         byteBuffer.readBoolean();
 
-        console.log('receive:', packet);
+        console.log('recv:', packet);
         this.msgQueue.push(packet);
     }
 
@@ -146,6 +145,8 @@ export default class NetManager extends cc.Component {
         if (this.state == State.CONNECTED && this.socket != null) {
             this.socket.close();
             this.socket = null;
+
+            console.log('disconnect to server!!!');
         }
         this.state = State.DISCONNECT;
     }
