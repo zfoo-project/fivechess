@@ -1,8 +1,9 @@
 import ProtocolManager from "./../tsProtocol/ProtocolManager";
 import ByteBuffer from "./../tsProtocol/buffer/ByteBuffer";
 import ResponseManager from "./ResponseManager";
-import EventManager from "./EventManager";
-import {EventConfig} from "../config/EventConfig";
+import {EventConfig} from "../event/EventConfig";
+import EventManager from "../event/EventManager";
+
 
 const {ccclass, property} = cc._decorator;
 

@@ -26,23 +26,23 @@ public class LoginController {
 
     @PacketReceiver
     public void atLoginRequest(Session session, LoginRequest req) {
-        var entity = uinfoEntityCaches.load(req.getAccount());
+        var uinfoEntity = uinfoEntityCaches.load(req.getAccount());
 
-        if (StringUtils.isBlank(entity.getAccount())) {
+        if (StringUtils.isBlank(uinfoEntity.getAccount())) {
             long uid = MongoIdUtils.getIncrementIdFromMongoDefault(UinfoEntity.class);
             var newEntity = UinfoEntity.valueOf(req.getAccount(), req.getPassword(), 100, uid);
             OrmContext.getAccessor().insert(newEntity);
 
             uinfoEntityCaches.invalidate(newEntity.getAccount());
 
-            entity = uinfoEntityCaches.load(req.getAccount());
+            uinfoEntity = uinfoEntityCaches.load(req.getAccount());
         } else {
-            if (!entity.getPassword().equals(req.getPassword())) {
+            if (!uinfoEntity.getPassword().equals(req.getPassword())) {
                 NetContext.getRouter().send(session, ErrorResponse.valueOf(ErrorCodeEnum.PASSWORD_ERROR));
                 return;
             }
         }
 
-        NetContext.getRouter().send(session, LoginResponse.valueOf(entity.getAccount(), entity.getUid(), entity.getCoin()));
+        NetContext.getRouter().send(session, LoginResponse.valueOf(uinfoEntity.getAccount(), uinfoEntity.getUid(), uinfoEntity.getCoin()));
     }
 }

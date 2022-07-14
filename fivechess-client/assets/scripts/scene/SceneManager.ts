@@ -1,4 +1,4 @@
-import NetManager from "./NetManager";
+import NetManager from "../net/NetManager";
 
 export default class SceneManager {
     private static _inst: SceneManager = null;

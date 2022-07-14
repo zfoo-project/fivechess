@@ -1,4 +1,6 @@
 import LoginResponse from "../tsProtocol/login/LoginResponse";
+import ServerData from "../game/login/ServerData";
+
 
 /**
  * 这个类负责全局消息处理，只处理数据存储,不处理UI，保持客户端数据可服务器数据同步
@@ -29,8 +31,10 @@ export default class ResponseManager {
      * @private
      */
     private init(): void {
-        this.commandFuncMap[LoginResponse.prototype.protocolId()] = function (packet) {
-            cc.log("loginResponse!!!");
+        this.commandFuncMap[LoginResponse.prototype.protocolId()] = function (packet: LoginResponse) {
+            ServerData.account = packet.account;
+            ServerData.uid = packet.uid;
+            ServerData.coin = packet.coin;
         }
     }
 }

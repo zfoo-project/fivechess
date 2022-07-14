@@ -1,6 +1,7 @@
-import NetManager from "../manager/NetManager";
-import LoginRequest from "../tsProtocol/login/LoginRequest";
-import LoginResponse from "../tsProtocol/login/LoginResponse";
+import NetManager from "../../net/NetManager";
+import LoginRequest from "../../tsProtocol/login/LoginRequest";
+import LoginResponse from "../../tsProtocol/login/LoginResponse";
+import SceneManager from "../../scene/SceneManager";
 
 const {ccclass, property} = cc._decorator;
 
@@ -26,13 +27,9 @@ export default class LoginScene extends cc.Component {
         NetManager.inst().sendMessage(req);
     }
 
-    onLogin(res: LoginResponse) {
-
-    }
-
     processResponse(protocolId, packet) {
         if (protocolId == LoginResponse.prototype.protocolId()) {
-            this.onLogin(packet);
+            SceneManager.inst().loadScene("Hall");
         }
     }
 }
