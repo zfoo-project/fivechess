@@ -1,20 +1,34 @@
-package com.zfoo.fivechess.common.entity;
+package com.zfoo.fivechess.entity;
 
 import com.zfoo.orm.model.anno.EntityCache;
 import com.zfoo.orm.model.anno.Id;
 import com.zfoo.orm.model.anno.Persister;
 import com.zfoo.orm.model.entity.IEntity;
+import lombok.Data;
 
+@Data
 @EntityCache(cacheStrategy = "tenThousand", persister = @Persister("time30s"))
 public class UinfoEntity implements IEntity<String> {
+    /**
+     * 账号
+     */
     @Id
     private String id;
 
+    /**
+     * 玩家id，游戏中使用
+     */
+    private long uid;
+
+    /**
+     * 密码
+     */
     private String password;
 
+    /**
+     * 金币数
+     */
     private int coin;
-
-    private long uid;
 
     public static UinfoEntity valueOf(String id, String password, int coin, long uid) {
         var entity = new UinfoEntity();
@@ -30,35 +44,7 @@ public class UinfoEntity implements IEntity<String> {
         return id;
     }
 
-    public String getId() {
+    public String getAccount() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public int getCoin() {
-        return coin;
-    }
-
-    public void setCoin(int coin) {
-        this.coin = coin;
-    }
-
-    public long getUid() {
-        return uid;
-    }
-
-    public void setUid(long uid) {
-        this.uid = uid;
     }
 }

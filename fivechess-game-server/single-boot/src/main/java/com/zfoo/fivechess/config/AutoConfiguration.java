@@ -1,4 +1,4 @@
-package com.zfoo.fivechess.single.boot.config;
+package com.zfoo.fivechess.config;
 
 import com.zfoo.net.config.model.NetConfig;
 import com.zfoo.orm.model.config.OrmConfig;

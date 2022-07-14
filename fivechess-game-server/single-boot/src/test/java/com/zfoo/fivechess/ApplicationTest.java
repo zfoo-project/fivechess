@@ -1,10 +1,7 @@
-package com.zfoo.fivechess.single.boot;
+package com.zfoo.fivechess;
 
-import com.zfoo.event.model.event.AppStartEvent;
-import com.zfoo.net.core.websocket.WebsocketServer;
-import com.zfoo.util.net.HostAndPort;
-import com.zfoo.util.net.NetUtils;
-import org.springframework.boot.SpringApplication;
+import com.zfoo.util.ThreadUtils;
+import org.junit.Ignore;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.mongo.MongoReactiveDataAutoConfiguration;
@@ -15,6 +12,7 @@ import org.springframework.boot.autoconfigure.mongo.MongoReactiveAutoConfigurati
 import org.springframework.boot.autoconfigure.task.TaskExecutionAutoConfiguration;
 import org.springframework.boot.autoconfigure.task.TaskSchedulingAutoConfiguration;
 
+@Ignore
 @SpringBootApplication(exclude = {
         // 排除MongoDB自动配置
         MongoDataAutoConfiguration.class,
@@ -27,16 +25,18 @@ import org.springframework.boot.autoconfigure.task.TaskSchedulingAutoConfigurati
         TaskExecutionAutoConfiguration.class,
         TaskSchedulingAutoConfiguration.class
 })
-public class Application {
-    public static final int WEBSOCKET_SERVER_PORT = 18000;
+public class ApplicationTest {
+    static {
+        var profile = "spring.profiles.active";
+        if (System.getProperty(profile) == null) {
+            //设置系统变量
+            System.setProperty(profile, "dev");
+        }
+    }
 
     public static void main(String[] args) {
-        var context = SpringApplication.run(Application.class, args);
+        Application.main(args);
 
-        context.registerShutdownHook();
-        context.publishEvent(new AppStartEvent(context));
-
-        var websocketServer = new WebsocketServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), WEBSOCKET_SERVER_PORT));
-        websocketServer.start();
+        ThreadUtils.sleep(Long.MAX_VALUE);
     }
 }

@@ -6,7 +6,7 @@ class LoginRequest {
     password: string = '';
 
     protocolId(): number {
-        return 201;
+        return 202;
     }
 
     static write(buffer: any, packet: LoginRequest | null) {

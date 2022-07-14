@@ -1,18 +1,18 @@
-package com.zfoo.fivechess.common.protocol.login;
+package com.zfoo.fivechess.protocol.login;
 
 import com.zfoo.protocol.IPacket;
 
 public class LoginResponse implements IPacket {
-    public static final transient short PROTOCOL_ID = 202;
+    public static final transient short PROTOCOL_ID = 203;
 
     private long uid;
     private String account;
     private int coin;
 
-    public static LoginResponse valueOf(long uid, String account, int coin) {
+    public static LoginResponse valueOf(String account, long uid, int coin) {
         var packet = new LoginResponse();
-        packet.uid = uid;
         packet.account = account;
+        packet.uid = uid;
         packet.coin = coin;
         return packet;
     }

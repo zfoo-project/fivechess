@@ -30,8 +30,9 @@
         <protocol id="116" location="com.zfoo.net.packet.common.TripleLSS"/>
     </module>
 
-    <module id="3" name="fiveChessHome" minId="201" maxId="1000">
-        <protocol id="201" location="com.zfoo.fivechess.common.protocol.login.LoginRequest"/>
-        <protocol id="202" location="com.zfoo.fivechess.common.protocol.login.LoginResponse"/>
+    <module id="3" name="login" minId="201" maxId="1000">
+        <protocol id="201" location="com.zfoo.fivechess.protocol.login.ErrorResponse"/>
+        <protocol id="202" location="com.zfoo.fivechess.protocol.login.LoginRequest"/>
+        <protocol id="203" location="com.zfoo.fivechess.protocol.login.LoginResponse"/>
     </module>
 </protocols>

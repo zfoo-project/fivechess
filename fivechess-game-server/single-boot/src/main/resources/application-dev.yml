@@ -1,13 +1,13 @@
 storage:
   id: storageManager
   scan:
-    package: com.zfoo.fivechess.common.**.resource
+    package: com.zfoo.fivechess.**.resource
   resource:
     location: classpath:/excel
 
 orm:
   id: mongodbConfig
-  entity-package: com.zfoo.fivechess.common.**.entity
+  entity-package: com.zfoo.fivechess.**.entity
   host:
     database: fivechess
     user:

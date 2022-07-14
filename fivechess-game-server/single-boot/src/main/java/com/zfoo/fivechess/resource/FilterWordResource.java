@@ -1,4 +1,4 @@
-package com.zfoo.fivechess.common.resource;
+package com.zfoo.fivechess.resource;
 
 
 import com.zfoo.storage.model.anno.Id;
