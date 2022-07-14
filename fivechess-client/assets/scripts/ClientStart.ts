@@ -21,7 +21,7 @@ export default class ClientStart extends cc.Component {
 
     processEvent(eventId, event) {
         if (eventId == EventConfig.CONNECTED_EVENT) {
-            SceneManager.loadScene("Login");
+            SceneManager.inst().loadScene("Login");
         }
     }
 }

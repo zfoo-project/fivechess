@@ -163,7 +163,7 @@ export default class NetManager extends cc.Component {
         let packet = this.msgQueue.shift();
 
         // 先是全局消息进行处理同步好服务器数据
-        ResponseManager.processResponse(packet.protocolId(), packet);
+        ResponseManager.inst().processResponse(packet.protocolId(), packet);
 
         // 处理各个handler
         for (let i = 0; i < this.responseHandlerList.length; i++) {
