@@ -1,5 +1,7 @@
 import ServerData from "../login/ServerData";
 import NetManager from "../../net/NetManager";
+import MatchRequest from "../../tsProtocol/protocol/MatchRequest";
+import MatchResponse from "../../tsProtocol/protocol/MatchResponse";
 
 const {ccclass, property} = cc._decorator;
 
@@ -13,6 +15,9 @@ export default class HallScene extends cc.Component {
 
     @property({type: cc.Label})
     private lblCoin: cc.Label = null;
+
+    @property({type: cc.Label})
+    private lblMatching: cc.Label = null;
 
     onLoad() {
         NetManager.inst().registerNet(this);
@@ -32,7 +37,14 @@ export default class HallScene extends cc.Component {
         this.lblCoin.string = ServerData.coin;
     }
 
-    public btnMatchClick(){
+    public btnMatchClick() {
+        let req = new MatchRequest();
+        NetManager.inst().sendMessage(req);
+    }
 
+    processResponse(protocolId, packet) {
+        if (protocolId == MatchResponse.prototype.protocolId()) {
+            this.lblMatching.string = ServerData.matching ? "匹配中" : "匹配";
+        }
     }
 }

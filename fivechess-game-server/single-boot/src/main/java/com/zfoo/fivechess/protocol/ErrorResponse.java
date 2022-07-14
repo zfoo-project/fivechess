@@ -1,4 +1,4 @@
-package com.zfoo.fivechess.protocol.login;
+package com.zfoo.fivechess.protocol;
 
 import com.zfoo.fivechess.enums.ErrorCodeEnum;
 import com.zfoo.protocol.IPacket;

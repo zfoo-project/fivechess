@@ -7,7 +7,7 @@ class LoginResponse {
     uid: number = 0;
 
     protocolId(): number {
-        return 203;
+        return 212;
     }
 
     static write(buffer: any, packet: LoginResponse | null) {

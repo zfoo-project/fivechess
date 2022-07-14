@@ -1,5 +1,6 @@
-import LoginResponse from "../tsProtocol/login/LoginResponse";
 import ServerData from "../game/login/ServerData";
+import LoginResponse from "../tsProtocol/protocol/LoginResponse";
+import MatchResponse from "../tsProtocol/protocol/MatchResponse";
 
 
 /**
@@ -35,6 +36,10 @@ export default class ResponseManager {
             ServerData.account = packet.account;
             ServerData.uid = packet.uid;
             ServerData.coin = packet.coin;
+        }
+
+        this.commandFuncMap[MatchResponse.prototype.protocolId()] = function (packet: MatchResponse) {
+            ServerData.matching = true;
         }
     }
 }

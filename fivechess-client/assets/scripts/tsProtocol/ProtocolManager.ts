@@ -9,9 +9,11 @@ import PairLS from './common/PairLS';
 import TripleLong from './common/TripleLong';
 import TripleString from './common/TripleString';
 import TripleLSS from './common/TripleLSS';
-import ErrorResponse from './login/ErrorResponse';
-import LoginRequest from './login/LoginRequest';
-import LoginResponse from './login/LoginResponse';
+import ErrorResponse from './protocol/ErrorResponse';
+import LoginRequest from './protocol/LoginRequest';
+import LoginResponse from './protocol/LoginResponse';
+import MatchRequest from './protocol/MatchRequest';
+import MatchResponse from './protocol/MatchResponse';
 
 const protocols = new Map<number, any>();
 
@@ -28,8 +30,10 @@ protocols.set(114, TripleLong);
 protocols.set(115, TripleString);
 protocols.set(116, TripleLSS);
 protocols.set(201, ErrorResponse);
-protocols.set(202, LoginRequest);
-protocols.set(203, LoginResponse);
+protocols.set(211, LoginRequest);
+protocols.set(212, LoginResponse);
+protocols.set(311, MatchRequest);
+protocols.set(312, MatchResponse);
 
 class ProtocolManager {
     static getProtocol(protocolId: number): any {

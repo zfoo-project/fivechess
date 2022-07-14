@@ -30,9 +30,14 @@
         <protocol id="116" location="com.zfoo.net.packet.common.TripleLSS"/>
     </module>
 
-    <module id="3" name="login" minId="201" maxId="1000">
-        <protocol id="201" location="com.zfoo.fivechess.protocol.login.ErrorResponse"/>
-        <protocol id="202" location="com.zfoo.fivechess.protocol.login.LoginRequest"/>
-        <protocol id="203" location="com.zfoo.fivechess.protocol.login.LoginResponse"/>
+    <module id="3" name="game" minId="201" maxId="1000">
+        <protocol id="201" location="com.zfoo.fivechess.protocol.ErrorResponse"/>
+
+        <protocol id="211" location="com.zfoo.fivechess.protocol.LoginRequest"/>
+        <protocol id="212" location="com.zfoo.fivechess.protocol.LoginResponse"/>
+
+
+        <protocol id="311" location="com.zfoo.fivechess.protocol.MatchRequest"/>
+        <protocol id="312" location="com.zfoo.fivechess.protocol.MatchResponse"/>
     </module>
 </protocols>

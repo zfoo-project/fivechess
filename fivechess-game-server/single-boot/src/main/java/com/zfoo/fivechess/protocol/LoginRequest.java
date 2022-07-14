@@ -1,9 +1,9 @@
-package com.zfoo.fivechess.protocol.login;
+package com.zfoo.fivechess.protocol;
 
 import com.zfoo.protocol.IPacket;
 
 public class LoginRequest implements IPacket {
-    public static final transient short PROTOCOL_ID = 202;
+    public static final transient short PROTOCOL_ID = 211;
 
     private String account;
     private String password;

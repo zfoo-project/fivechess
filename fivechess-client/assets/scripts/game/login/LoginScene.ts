@@ -1,7 +1,8 @@
 import NetManager from "../../net/NetManager";
-import LoginRequest from "../../tsProtocol/login/LoginRequest";
-import LoginResponse from "../../tsProtocol/login/LoginResponse";
+
 import SceneManager from "../../scene/SceneManager";
+import LoginRequest from "../../tsProtocol/protocol/LoginRequest";
+import LoginResponse from "../../tsProtocol/protocol/LoginResponse";
 
 const {ccclass, property} = cc._decorator;
 
