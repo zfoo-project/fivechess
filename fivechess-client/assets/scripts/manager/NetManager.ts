@@ -4,8 +4,6 @@ import ResponseManager from "./ResponseManager";
 import EventManager from "./EventManager";
 import {EventConfig} from "../config/EventConfig";
 
-
-
 const {ccclass, property} = cc._decorator;
 
 enum State {
@@ -34,7 +32,7 @@ export default class NetManager extends cc.Component {
         }
         return NetManager._inst;
     }
-    
+
     /**
      * 连接服务器
      */
@@ -50,8 +48,9 @@ export default class NetManager extends cc.Component {
 
         this.socket.onopen = this.onOpen.bind(this);
         this.socket.onmessage = this.onMessage.bind(this);
+        this.socket.onerror = () => {
+        };
         this.socket.onclose = this.onClose.bind(this);
-        this.socket.onerror = this.onClose.bind(this);
     }
 
     /**
@@ -147,10 +146,12 @@ export default class NetManager extends cc.Component {
         if (this.state == State.CONNECTED && this.socket != null) {
             this.socket.close();
             this.socket = null;
-
-            console.log('disconnect to server!!!');
         }
+
         this.state = State.DISCONNECT;
+        console.log('disconnect to server!!!');
+
+        EventManager.inst().sendEvent(EventConfig.DISCONNECT_EVENT, null);
     }
 
     update(dt: number) {

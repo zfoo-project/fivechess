@@ -25,11 +25,10 @@ export default class ClientStart extends cc.Component {
     }
 
     init() {
-        let action = cc.fadeIn(1.0);//渐显
-        let action2 = cc.fadeOut(1.0);//渐隐效果
-
-        let seq = cc.sequence(action2, action);
-        this.lblStatus.node.runAction(cc.repeat(seq, 10));
+        let action1 = cc.fadeOut(1.0);//渐隐效果
+        let action2 = cc.fadeIn(1.0);//渐显
+        let seq = cc.sequence(action1, action2);
+        this.lblStatus.node.runAction(cc.repeatForever(seq));
     }
 
     processEvent(eventId, event) {
@@ -39,6 +38,10 @@ export default class ClientStart extends cc.Component {
             this.scheduleOnce(() => {
                 SceneManager.inst().loadScene("Login");
             }, waitTime);
+        } else if (eventId == EventConfig.DISCONNECT_EVENT) {
+            this.lblStatus.node.stopAllActions();
+            this.lblStatus.string = "连接服务器失败! ";
+            this.lblStatus.node.opacity = 255;
         }
     }
 }
