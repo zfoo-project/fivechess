@@ -6,7 +6,7 @@ import SceneManager from "./manager/SceneManager";
 const {ccclass, property} = cc._decorator;
 
 @ccclass
-export default class ClientStart extends cc.Component {
+export default class Application extends cc.Component {
     @property(cc.String)
     private url: string = "ws://192.168.3.2:18000/websocket";
 
