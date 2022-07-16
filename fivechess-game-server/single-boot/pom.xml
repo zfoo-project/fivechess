@@ -86,6 +86,8 @@
 
         <junit.version>4.12</junit.version>
 
+        <lombok.version>1.18.22</lombok.version>
+
         <!-- java版本和文件编码 -->
         <java.version>11</java.version>
         <file.encoding>UTF-8</file.encoding>
@@ -113,12 +115,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.zfoo.fivechess</groupId>
-            <artifactId>common</artifactId>
-            <version>1.0</version>
-        </dependency>
-
-        <dependency>
             <groupId>com.zfoo</groupId>
             <artifactId>boot</artifactId>
             <version>${zfoo.boot.version}</version>
@@ -136,6 +132,13 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>

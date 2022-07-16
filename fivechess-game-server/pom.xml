@@ -10,7 +10,6 @@
     <version>1.0</version>
     <modules>
         <module>single-boot</module>
-        <module>common</module>
     </modules>
 
     <properties>

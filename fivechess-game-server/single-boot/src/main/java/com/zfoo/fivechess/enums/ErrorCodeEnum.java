@@ -8,7 +8,7 @@ import java.util.Set;
 @Getter
 public enum ErrorCodeEnum {
     PASSWORD_ERROR(-1, "密码错误"),
-    ALREADY_MATCHING_ERROR(-1, "正在匹配中"),
+    ALREADY_MATCHING_ERROR(-2, "正在匹配中"),
 
     ;
     private int errorCode;

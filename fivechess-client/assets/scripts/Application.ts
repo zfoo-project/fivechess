@@ -29,12 +29,15 @@ export default class Application extends cc.Component {
         let action2 = cc.fadeIn(1.0);//渐显
         let seq = cc.sequence(action1, action2);
         this.lblStatus.node.runAction(cc.repeatForever(seq));
+
+        cc.debug.setDisplayStats(false);
     }
 
     processEvent(eventId, event) {
         if (eventId == EventConfig.CONNECTED_EVENT) {
-            let waitTime: number = 1;
-            this.lblStatus.string = "连接服务器成功! ${waitTime}后跳到登录";
+            let waitTime: number = 3;
+
+            this.lblStatus.string = "连接服务器成功!" + waitTime + "s后跳到登录";
             this.scheduleOnce(() => {
                 SceneManager.inst().loadScene("Login");
             }, waitTime);
