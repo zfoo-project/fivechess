@@ -5,8 +5,8 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.zfoo.fivechess</groupId>
-    <artifactId>single-boot</artifactId>
+    <groupId>com.zfoo</groupId>
+    <artifactId>fivechess</artifactId>
     <version>1.0</version>
 
     <packaging>jar</packaging>
