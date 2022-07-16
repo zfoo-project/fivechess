@@ -24,11 +24,9 @@
         <zfoo.protocol.version>3.0</zfoo.protocol.version>
         <zfoo.util.version>3.0</zfoo.util.version>
 
-
         <!-- 核心spring框架 -->
         <spring.version>5.3.4</spring.version>
         <spring.boot.version>2.4.3</spring.boot.version>
-
 
         <!-- 工具包 -->
         <commons-codec.version>1.15</commons-codec.version>
@@ -50,7 +48,6 @@
         <hutool.version>5.5.9</hutool.version>
         <oshi.version>5.7.0</oshi.version>
         <snakeyaml.version>1.28</snakeyaml.version>
-
 
         <!-- json和xml解析包 -->
         <jackson.version>2.12.1</jackson.version>
@@ -80,13 +77,10 @@
         <elastic.search.spring.version>4.1.5</elastic.search.spring.version>
         <lucene.version>8.6.2</lucene.version>
 
-
         <slf4j.version>1.7.30</slf4j.version>
         <logback.version>1.2.3</logback.version>
 
         <junit.version>4.12</junit.version>
-
-        <lombok.version>1.18.22</lombok.version>
 
         <!-- java版本和文件编码 -->
         <java.version>11</java.version>
@@ -102,6 +96,8 @@
         <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
         <versions-maven-plugin.version>2.8.1</versions-maven-plugin.version>
 
+        <!-- 其它 -->
+        <lombok.version>1.18.22</lombok.version>
 
         <project.build.sourceEncoding>${file.encoding}</project.build.sourceEncoding>
         <maven.compiler.encoding>${file.encoding}</maven.compiler.encoding>
@@ -118,12 +114,6 @@
             <groupId>com.zfoo</groupId>
             <artifactId>boot</artifactId>
             <version>${zfoo.boot.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.zfoo</groupId>
-            <artifactId>hotswap</artifactId>
-            <version>${zfoo.hotswap.version}</version>
         </dependency>
 
         <dependency>
