@@ -1,7 +1,7 @@
-import EventManager from "./event/EventManager";
-import {EventConfig} from "./event/EventConfig";
-import SceneManager from "./scene/SceneManager";
-import NetManager from "./net/NetManager";
+import EventManager from "./manager/EventManager";
+import NetManager from "./manager/NetManager";
+import {EventConfig} from "./config/EventConfig";
+import SceneManager from "./manager/SceneManager";
 
 const {ccclass, property} = cc._decorator;
 
@@ -14,6 +14,8 @@ export default class ClientStart extends cc.Component {
     private lblStatus: cc.Label = null;
 
     onLoad() {
+        this.init();
+
         EventManager.inst().registerEvent(this);
         NetManager.inst().connect(this.url);
     }
@@ -22,12 +24,21 @@ export default class ClientStart extends cc.Component {
         EventManager.inst().unregisterEvent(this);
     }
 
+    init() {
+        let action = cc.fadeIn(1.0);//渐显
+        let action2 = cc.fadeOut(1.0);//渐隐效果
+
+        let seq = cc.sequence(action2, action);
+        this.lblStatus.node.runAction(cc.repeat(seq, 10));
+    }
+
     processEvent(eventId, event) {
         if (eventId == EventConfig.CONNECTED_EVENT) {
-            this.lblStatus.string = "连接服务器成功! 2s后跳到登录";
+            let waitTime: number = 1;
+            this.lblStatus.string = "连接服务器成功! ${waitTime}后跳到登录";
             this.scheduleOnce(() => {
                 SceneManager.inst().loadScene("Login");
-            }, 2);
+            }, waitTime);
         }
     }
 }

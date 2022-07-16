@@ -1,7 +1,7 @@
 import ServerData from "../login/ServerData";
-import NetManager from "../../net/NetManager";
 import MatchRequest from "../../tsProtocol/protocol/MatchRequest";
 import MatchResponse from "../../tsProtocol/protocol/MatchResponse";
+import NetManager from "../../manager/NetManager";
 
 const {ccclass, property} = cc._decorator;
 
