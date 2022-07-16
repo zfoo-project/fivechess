@@ -115,8 +115,8 @@ export default class NetManager extends cc.Component {
      */
     private onOpen(event) {
         console.log('connect to server success!!!');
-        this.state = State.CONNECTED;
 
+        this.state = State.CONNECTED;
         EventManager.inst().sendEvent(EventConfig.CONNECTED_EVENT, null);
     }
 
@@ -143,14 +143,14 @@ export default class NetManager extends cc.Component {
      * @private
      */
     private onClose() {
+        cc.error('disconnect to server!!!');
+
         if (this.state == State.CONNECTED && this.socket != null) {
             this.socket.close();
             this.socket = null;
         }
 
         this.state = State.DISCONNECT;
-        console.log('disconnect to server!!!');
-
         EventManager.inst().sendEvent(EventConfig.DISCONNECT_EVENT, null);
     }
 
