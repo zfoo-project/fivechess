@@ -1,7 +1,6 @@
 package com.zfoo.fivechess.controller;
 
 import com.zfoo.fivechess.enums.ErrorCodeEnum;
-import com.zfoo.fivechess.protocol.ErrorResponse;
 import com.zfoo.fivechess.protocol.LoginRequest;
 import com.zfoo.fivechess.protocol.LoginResponse;
 import com.zfoo.fivechess.service.LoginService;
@@ -19,16 +18,19 @@ public class LoginController {
 
     @PacketReceiver
     public void atLoginRequest(Session session, LoginRequest req) {
-        var uinfoEntity = loginService.getEntity(req.getAccount());
-        if (uinfoEntity.isNull()) {
-            uinfoEntity = loginService.insertAndGetEntity(req.getAccount(), req.getPassword());
+        String account = req.getAccount();
+        String password = req.getPassword();
+
+        var entity = loginService.selectByAccount(account);
+        if (entity.isNull()) {
+            entity = loginService.addUser(account, password);
         } else {
-            if (!loginService.checkPassword(uinfoEntity.getPassword(), req.getPassword())) {
-                NetContext.getRouter().send(session, ErrorResponse.valueOf(ErrorCodeEnum.PASSWORD_ERROR));
+            if (!entity.getPassword().equals(password)) {
+                NetContext.getRouter().send(session, ErrorCodeEnum.PASSWORD_ERROR.newErrorResponse());
                 return;
             }
         }
 
-        NetContext.getRouter().send(session, LoginResponse.valueOf(uinfoEntity.getAccount(), uinfoEntity.getUid(), uinfoEntity.getCoin()));
+        NetContext.getRouter().send(session, LoginResponse.valueOf(entity.getAccount(), entity.getUid(), entity.getCoin()));
     }
 }

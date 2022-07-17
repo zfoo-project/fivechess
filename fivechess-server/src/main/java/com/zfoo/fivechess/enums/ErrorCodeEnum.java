@@ -1,6 +1,7 @@
 package com.zfoo.fivechess.enums;
 
 import com.google.common.collect.Sets;
+import com.zfoo.fivechess.protocol.ErrorResponse;
 import lombok.Getter;
 
 import java.util.Set;
@@ -26,5 +27,9 @@ public enum ErrorCodeEnum {
     ErrorCodeEnum(int errorCode, String message) {
         this.errorCode = errorCode;
         this.message = message;
+    }
+
+    public ErrorResponse newErrorResponse() {
+        return ErrorResponse.valueOf(this);
     }
 }

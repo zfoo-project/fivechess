@@ -12,21 +12,17 @@ public class LoginService {
     @EntityCachesInjection
     private IEntityCaches<String, UinfoEntity> uinfoEntityCaches;
 
-    public UinfoEntity getEntity(String account) {
+    public UinfoEntity selectByAccount(String account) {
         return uinfoEntityCaches.load(account);
     }
 
-    public UinfoEntity insertAndGetEntity(String account, String password) {
+    public UinfoEntity addUser(String account, String password) {
         long uid = MongoIdUtils.getIncrementIdFromMongoDefault(UinfoEntity.class);
+
         var newEntity = UinfoEntity.valueOf(account, password, 100, uid);
         OrmContext.getAccessor().insert(newEntity);
-
         uinfoEntityCaches.invalidate(newEntity.getAccount());
 
         return uinfoEntityCaches.load(account);
-    }
-
-    public boolean checkPassword(String uinfoPassword, String inputPassword) {
-        return uinfoPassword.equals(inputPassword);
     }
 }
