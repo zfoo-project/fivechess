@@ -40,7 +40,7 @@ public class LoginController {
             }
         }
 
-        var response = LoginResponse.valueOf(accountEntity.getUid(), accountEntity.getId(), accountEntity.getGameInfoVo());
+        var response = LoginResponse.valueOf(accountEntity.getUid(), accountEntity.getId(), accountEntity.getRoleInfoVo());
         NetContext.getRouter().send(session, response);
     }
 }

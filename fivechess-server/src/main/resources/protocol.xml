@@ -29,7 +29,7 @@
         <protocol id="115" location="com.zfoo.net.packet.common.TripleString"/>
         <protocol id="116" location="com.zfoo.net.packet.common.TripleLSS"/>
 
-        <protocol id="120" location="com.zfoo.fivechess.protocol.common.GameInfoVo"/>
+        <protocol id="120" location="com.zfoo.fivechess.protocol.common.RoleInfoVo"/>
     </module>
 
     <module id="3" name="game" minId="201" maxId="1000">

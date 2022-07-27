@@ -1,6 +1,6 @@
 package com.zfoo.fivechess.entity;
 
-import com.zfoo.fivechess.protocol.common.GameInfoVo;
+import com.zfoo.fivechess.protocol.common.RoleInfoVo;
 import com.zfoo.orm.model.anno.EntityCache;
 import com.zfoo.orm.model.anno.Id;
 import com.zfoo.orm.model.anno.Index;
@@ -28,7 +28,7 @@ public class AccountEntity implements IEntity<String> {
 
     private long regTime;
 
-    private GameInfoVo gameInfoVo = new GameInfoVo();
+    private RoleInfoVo roleInfoVo = new RoleInfoVo();
 
     public static AccountEntity valueOf(long uid, String account, String password) {
         var entity = new AccountEntity();

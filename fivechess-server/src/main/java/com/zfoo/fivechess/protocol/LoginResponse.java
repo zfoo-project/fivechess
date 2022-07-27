@@ -1,6 +1,6 @@
 package com.zfoo.fivechess.protocol;
 
-import com.zfoo.fivechess.protocol.common.GameInfoVo;
+import com.zfoo.fivechess.protocol.common.RoleInfoVo;
 import com.zfoo.protocol.IPacket;
 
 public class LoginResponse implements IPacket {
@@ -9,13 +9,13 @@ public class LoginResponse implements IPacket {
     private long uid;
 
     private String account;
-    private GameInfoVo gameInfoVo;
+    private RoleInfoVo roleInfoVo;
 
-    public static LoginResponse valueOf(long uid, String account, GameInfoVo gameInfo) {
+    public static LoginResponse valueOf(long uid, String account, RoleInfoVo roleInfoVo) {
         var response = new LoginResponse();
         response.uid = uid;
         response.account = account;
-        response.gameInfoVo = gameInfo;
+        response.roleInfoVo = roleInfoVo;
         return response;
     }
 
@@ -35,11 +35,11 @@ public class LoginResponse implements IPacket {
         this.account = account;
     }
 
-    public GameInfoVo getGameInfoVo() {
-        return gameInfoVo;
+    public RoleInfoVo getRoleInfoVo() {
+        return roleInfoVo;
     }
 
-    public void setGameInfoVo(GameInfoVo gameInfoVo) {
-        this.gameInfoVo = gameInfoVo;
+    public void setRoleInfoVo(RoleInfoVo roleInfoVo) {
+        this.roleInfoVo = roleInfoVo;
     }
 }
