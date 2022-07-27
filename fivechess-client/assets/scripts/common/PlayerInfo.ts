@@ -1,7 +1,7 @@
 export class PlayerInfo {
-    public static account: string;
     public static uid: number;
-    public static coin: number;
+    
+    public static account: string;
 
-    public static matching: boolean = false;
+    public static coin: number;
 }

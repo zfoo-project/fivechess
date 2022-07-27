@@ -44,7 +44,7 @@ export default class HallMain extends cc.Component {
 
     processResponse(protocolId, packet) {
         if (protocolId == MatchResponse.prototype.protocolId()) {
-            this.lblMatching.string = PlayerInfo.matching ? "匹配中" : "匹配";
+
         }
     }
 }
