@@ -22,7 +22,7 @@ public class LoginController {
         String password = req.getPassword();
 
         var entity = loginService.selectByAccount(account);
-        if (entity.isNull()) {
+        if (entity.checkNull()) {
             entity = loginService.addUser(account, password);
         } else {
             if (!entity.getPassword().equals(password)) {

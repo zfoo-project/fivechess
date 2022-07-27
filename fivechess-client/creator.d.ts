@@ -19800,7 +19800,7 @@ declare namespace dragonBones {
 		!#zh 当前骨骼中所有动画的时间缩放率。 */
 		timeScale: number;		
 		/** !#en The play times of the default animation.
-		     -1 means using the value of config file;
+		     -1 means using the value of common file;
 		     0 means repeat for ever
 		     >0 means repeat times
 		!#zh 播放默认动画的循环次数
@@ -19859,7 +19859,7 @@ declare namespace dragonBones {
 		Play the specified animation.
 		Parameter animName specify the animation name.
 		Parameter playTimes specify the repeat times of the animation.
-		-1 means use the value of the config file.
+		-1 means use the value of the common file.
 		0 means play the animation for ever.
 		>0 means repeat times.
 		!#zh
@@ -21493,7 +21493,7 @@ declare namespace cc.AssetManager {
 		```js
 		var requestItem = cc.AssetManager.RequestItem.create();
 		requestItem.uuid = 'fcmR3XADNLgJ1ByKhqcC5Z';
-		requestItem.info = config.getAssetInfo('fcmR3XADNLgJ1ByKhqcC5Z');
+		requestItem.info = common.getAssetInfo('fcmR3XADNLgJ1ByKhqcC5Z');
 		packManager.load(requestItem, null, (err, data) => console.log(err));
 		``` 
 		*/
@@ -25254,7 +25254,7 @@ declare namespace dragonBones {
  */
 declare namespace dragonBones {
     /**
-     * - The animation config is used to describe all the information needed to play an animation state.
+     * - The animation common is used to describe all the information needed to play an animation state.
      * The API is still in the experimental phase and may encounter bugs or stability or compatibility issues when used.
      * @see dragonBones.AnimationState
      * @beta
@@ -27766,9 +27766,9 @@ declare namespace dragonBones {
          */
         stop(animationName?: string | null): void;
         /**
-         * - Play animation with a specific animation config.
+         * - Play animation with a specific animation common.
          * The API is still in the experimental phase and may encounter bugs or stability or compatibility issues when used.
-         * @param animationConfig - The animation config.
+         * @param animationConfig - The animation common.
          * @returns The playing animation state.
          * @see dragonBones.AnimationConfig
          * @beta
