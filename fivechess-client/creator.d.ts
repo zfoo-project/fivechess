@@ -1,6 +1,6 @@
 
 /** !#en
-The main namespace of Cocos2d-JS, all engine core classes, functions, properties and constants are defined in this namespace.
+The hall namespace of Cocos2d-JS, all engine core classes, functions, properties and constants are defined in this namespace.
 !#zh
 Cocos 引擎的主要命名空间，引擎代码中所有的类，函数，属性和常量都在这个命名空间中定义。 */
 declare namespace cc {	
@@ -2967,7 +2967,7 @@ declare namespace cc {
 	   the standard way to use it is by calling:<br/>
 	     - cc.director.methodName(); <br/>
 	
-	   It creates and handle the main Window and manages how and when to execute the Scenes.<br/>
+	   It creates and handle the hall Window and manages how and when to execute the Scenes.<br/>
 	   <br/>
 	   The cc.director is also responsible for:<br/>
 	     - initializing the OpenGL context<br/>
@@ -3153,7 +3153,7 @@ declare namespace cc {
 		*/
 		getAnimationInterval(): number;		
 		/**
-		Sets animation interval, this doesn't control the main loop.
+		Sets animation interval, this doesn't control the hall loop.
 		To control the game's frame rate overall, please use {{#crossLink "Game.setFrameRate"}}cc.game.setFrameRate{{/crossLink}}
 		@param value The animation interval desired. 
 		*/
@@ -3372,7 +3372,7 @@ declare namespace cc {
 		*/
 		step(): void;		
 		/**
-		!#en Pause the game main loop. This will pause:
+		!#en Pause the game hall loop. This will pause:
 		game logic execution, rendering process, event manager, background music and all audio effects.
 		This is different with cc.director.pause which only pause the game logic execution.
 		!#zh 暂停游戏主循环。包含：游戏逻辑，渲染，事件处理，背景音乐和所有音效。这点和只暂停游戏逻辑的 cc.director.pause 不同。 
@@ -5967,10 +5967,10 @@ declare namespace cc {
 		可选参数的预设集 */
 		presets: Record<string, Record<string, any>>;		
 		/** !#en
-		The builtin 'main' bundle
+		The builtin 'hall' bundle
 		
 		!#zh
-		内置 main 包 */
+		内置 hall 包 */
 		main: cc.AssetManager.Bundle;		
 		/** !#en
 		The builtin 'resources' bundle
@@ -6742,7 +6742,7 @@ declare namespace cc {
 	/** !#en Class for prefab handling.
 	!#zh 预制资源类。 */
 	export class Prefab extends Asset {		
-		/** the main cc.Node in the prefab */
+		/** the hall cc.Node in the prefab */
 		data: Node;		
 		/** !#zh
 		设置实例化这个 prefab 时所用的优化策略。根据使用情况设置为合适的值，能优化该 prefab 实例化所用的时间。
@@ -9302,7 +9302,7 @@ declare namespace cc {
 		isAlignOnce: boolean;	
 	}	
 	/** !#en SubContextView is a view component which controls open data context viewport in minigame platform.<br/>
-	The component's node size decide the viewport of the sub context content in main context,
+	The component's node size decide the viewport of the sub context content in hall context,
 	the entire sub context texture will be scaled to the node's bounding box area.<br/>
 	This component provides multiple important features:<br/>
 	1. Sub context could use its own resolution size and policy.<br/>
@@ -10869,7 +10869,7 @@ declare namespace cc {
 		static DESKTOP_BROWSER: number;		
 		/** Indicates whether executes in editor's window process (Electron's renderer context) */
 		static EDITOR_PAGE: number;		
-		/** Indicates whether executes in editor's main process (Electron's browser context) */
+		/** Indicates whether executes in editor's hall process (Electron's browser context) */
 		static EDITOR_CORE: number;		
 		static WECHAT_GAME: number;		
 		static QQ_PLAY: number;		
@@ -10947,7 +10947,7 @@ declare namespace cc {
 		static os: string;		
 		/** Indicate the running os version */
 		static osVersion: string;		
-		/** Indicate the running os main version */
+		/** Indicate the running os hall version */
 		static osMainVersion: number;		
 		/** Indicate the running browser type */
 		static browserType: string|void;		
@@ -11003,7 +11003,7 @@ declare namespace cc {
 		static now(): number;	
 	}	
 	/** cc.view is the singleton object which represents the game window.<br/>
-	It's main task include: <br/>
+	It's hall task include: <br/>
 	 - Apply the design resolution policy<br/>
 	 - Provide interaction with the window, like resize event on web, retina display support, etc...<br/>
 	 - Manage the game view port which can be different with the window<br/>
@@ -11371,7 +11371,7 @@ declare namespace cc {
 	export class OriginalContainer extends ContainerStrategy {	
 	}	
 	/** <p>cc.ResolutionPolicy class is the root strategy class of scale strategy,
-	its main task is to maintain the compatibility with Cocos2d-x</p> */
+	its hall task is to maintain the compatibility with Cocos2d-x</p> */
 	export class ResolutionPolicy {		
 		/**
 		
@@ -14474,7 +14474,7 @@ declare namespace cc {
 		*/
 		static extname(pathStr: string): any;		
 		/**
-		!#en Get the main name of a file name
+		!#en Get the hall name of a file name
 		!#zh 获取文件名的主名称
 		@param fileName fileName 
 		*/
@@ -19756,7 +19756,7 @@ declare namespace cc {
 }
 
 /** !#en
-The global main namespace of DragonBones, all classes, functions,
+The global hall namespace of DragonBones, all classes, functions,
 properties and constants of DragonBones are defined in this namespace
 !#zh
 DragonBones 的全局的命名空间，
@@ -20059,7 +20059,7 @@ declare namespace dragonBones {
 }
 
 /** !#en
-The global main namespace of Spine, all classes, functions,
+The global hall namespace of Spine, all classes, functions,
 properties and constants of Spine are defined in this namespace
 !#zh
 Spine 的全局的命名空间，
@@ -21373,7 +21373,7 @@ declare namespace cc.AssetManager {
 		
 		@example 
 		```js
-		var url = 'assets/main/import/fc/fc991dd7-0033-4b80-9d41-c8a86a702e59.json';
+		var url = 'assets/hall/import/fc/fc991dd7-0033-4b80-9d41-c8a86a702e59.json';
 		var uuid = getUuidFromURL(url); // fc991dd7-0033-4b80-9d41-c8a86a702e59
 		``` 
 		*/
@@ -21389,10 +21389,10 @@ declare namespace cc.AssetManager {
 		
 		@example 
 		```js
-		// json path, 'assets/main/import/fc/fc991dd7-0033-4b80-9d41-c8a86a702e59.json';
+		// json path, 'assets/hall/import/fc/fc991dd7-0033-4b80-9d41-c8a86a702e59.json';
 		var url = getUrlWithUuid('fcmR3XADNLgJ1ByKhqcC5Z', {isNative: false});
 		
-		// png path, 'assets/main/native/fc/fc991dd7-0033-4b80-9d41-c8a86a702e59.png';
+		// png path, 'assets/hall/native/fc/fc991dd7-0033-4b80-9d41-c8a86a702e59.png';
 		var url = getUrlWithUuid('fcmR3XADNLgJ1ByKhqcC5Z', {isNative: true, nativeExt: '.png'});
 		``` 
 		*/

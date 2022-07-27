@@ -4,12 +4,11 @@ import {NetManager} from "../common/NetManager";
 import {EventEnum} from "../common/EventEnum";
 import {EventManager} from "../common/EventManager";
 import LoginMain from "./LoginMain";
-import {PlayerInfo} from "../common/PlayerInfo";
 
 const {ccclass, property} = cc._decorator;
 
 @ccclass
-export default class Login extends cc.Component {
+export default class LoginPanel extends cc.Component {
 
     private isConnecting = false;
 
@@ -48,7 +47,7 @@ export default class Login extends cc.Component {
         NetManager.sendMessage(request);
     }
 
-    processResponse(protocolId, packet) {
+    processResponse(protocolId, response) {
         if (protocolId == LoginResponse.prototype.protocolId()) {
             cc.director.loadScene("main");
         }

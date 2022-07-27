@@ -3,7 +3,7 @@ import ByteBuffer from "../tsProtocol/buffer/ByteBuffer";
 
 import {EventManager} from "./EventManager";
 import {EventEnum} from "./EventEnum";
-import {ResponseManager} from "./ResponseManager";
+import {GlobalMessageProcessManager} from "./GlobalMessageProcessManager";
 
 enum State {
     DISCONNECT = 1,  // 未连接
@@ -17,13 +17,14 @@ enum State {
 export class NetManager {
     private static state: State = State.DISCONNECT;
     private static socket: WebSocket = null;
-    private static msgQueue = [];
+    private static responseMsgQueue = [];
     private static responseHandlerSet = new Set();
 
     /**
      * 连接服务器
      */
     public static connect(url: string) {
+
         if (this.state != State.DISCONNECT) {
             return;
         }
@@ -50,7 +51,7 @@ export class NetManager {
             byteBuffer.readBoolean();
 
             console.log('recv:', packet);
-            this.msgQueue.push(packet);
+            this.responseMsgQueue.push(packet);
         };
 
         NetManager.socket.onerror = () => {
@@ -72,7 +73,7 @@ export class NetManager {
     /**
      * 发送消息
      */
-    public static sendMessage(packet) {
+    public static sendMessage(request) {
         if (NetManager.state != State.CONNECTED) {
             cc.error("only can send msg on CONNECTED status!!!");
             return;
@@ -85,7 +86,7 @@ export class NetManager {
 
         const byteBuffer = new ByteBuffer();
         byteBuffer.setWriteOffset(4);
-        ProtocolManager.write(byteBuffer, packet);
+        ProtocolManager.write(byteBuffer, request);
         byteBuffer.writeBoolean(false);
 
         const writeOffset = byteBuffer.writeOffset;
@@ -94,7 +95,7 @@ export class NetManager {
         byteBuffer.setWriteOffset(writeOffset);
         this.socket.send(byteBuffer.buffer);
 
-        cc.log("send:", packet);
+        cc.log("send:", request);
     }
 
     public static registerNetHandler(handler) {
@@ -114,19 +115,19 @@ export class NetManager {
     }
 
     public static update() {
-        if (NetManager.msgQueue.length == 0) {
+        if (NetManager.responseMsgQueue.length == 0) {
             return;
         }
 
-        let packet = NetManager.msgQueue.shift();
+        let response = NetManager.responseMsgQueue.shift();
 
         // 先是全局消息进行处理同步好服务器数据
-        ResponseManager.processResponse(packet.protocolId(), packet);
+        GlobalMessageProcessManager.processResponse(response.protocolId(), response);
 
         // 处理各个handler
         NetManager.responseHandlerSet.forEach(handler => {
             // @ts-ignore
-            handler.processResponse(packet.protocolId(), packet);
+            handler.processResponse(response.protocolId(), response);
         });
     }
 }

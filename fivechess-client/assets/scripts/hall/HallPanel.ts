@@ -38,8 +38,8 @@ export default class HallPanel extends cc.Component {
     }
 
     public btn_match() {
-        let req = new MatchRequest();
-        NetManager.sendMessage(req);
+        let request = new MatchRequest();
+        NetManager.sendMessage(request);
     }
 
     processResponse(protocolId, packet) {
