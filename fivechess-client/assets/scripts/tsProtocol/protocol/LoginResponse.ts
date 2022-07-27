@@ -1,9 +1,10 @@
+import GameInfoVo from './common/GameInfoVo';
 
 
 class LoginResponse {
 
     account: string = '';
-    coin: number = 0;
+    gameInfoVo: GameInfoVo | null = null;
     uid: number = 0;
 
     protocolId(): number {
@@ -19,7 +20,7 @@ class LoginResponse {
         }
 
         buffer.writeString(packet.account);
-        buffer.writeInt(packet.coin);
+        buffer.writePacket(packet.gameInfoVo, 120);
         buffer.writeLong(packet.uid);
     }
 
@@ -30,8 +31,8 @@ class LoginResponse {
         const packet = new LoginResponse();
         const result0 = buffer.readString();
         packet.account = result0;
-        const result1 = buffer.readInt();
-        packet.coin = result1;
+        const result1 = buffer.readPacket(120);
+        packet.gameInfoVo = result1;
         const result2 = buffer.readLong();
         packet.uid = result2;
         return packet;

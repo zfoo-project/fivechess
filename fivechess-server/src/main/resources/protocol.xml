@@ -28,10 +28,12 @@
         <protocol id="114" location="com.zfoo.net.packet.common.TripleLong"/>
         <protocol id="115" location="com.zfoo.net.packet.common.TripleString"/>
         <protocol id="116" location="com.zfoo.net.packet.common.TripleLSS"/>
+
+        <protocol id="120" location="com.zfoo.fivechess.protocol.common.GameInfoVo"/>
     </module>
 
     <module id="3" name="game" minId="201" maxId="1000">
-        <protocol id="201" location="com.zfoo.fivechess.protocol.ErrorResponse"/>
+        <protocol id="201" location="com.zfoo.fivechess.protocol.common.ErrorResponse"/>
 
         <protocol id="211" location="com.zfoo.fivechess.protocol.LoginRequest"/>
         <protocol id="212" location="com.zfoo.fivechess.protocol.LoginResponse"/>

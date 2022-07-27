@@ -1,6 +1,5 @@
 import ProtocolManager from "../ProtocolManager";
 
-// @ts-ignore
 const Longbits = require('./longbits.js');
 
 const empty_str = '';
@@ -14,7 +13,6 @@ const maxInt = 2147483647;
 const minInt = -2147483648;
 
 // UTF-8编码与解码
-// @ts-ignore
 const encoder = new TextEncoder('utf-8');
 const decoder = new TextDecoder('utf-8');
 

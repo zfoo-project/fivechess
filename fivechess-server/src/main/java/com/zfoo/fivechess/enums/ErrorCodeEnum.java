@@ -1,7 +1,7 @@
 package com.zfoo.fivechess.enums;
 
 import com.google.common.collect.Sets;
-import com.zfoo.fivechess.protocol.ErrorResponse;
+import com.zfoo.fivechess.protocol.common.ErrorResponse;
 import lombok.Getter;
 
 import java.util.Set;
