@@ -24,4 +24,5 @@ export class UiManager extends cc.Component {
 
 export const enum UiPanelEnum {
     loginPanel = "loginPanel",
+    hallPanel = "hallPanel",
 }

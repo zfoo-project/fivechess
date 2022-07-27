@@ -12,8 +12,7 @@ export default class LoginMain extends cc.Component {
 
     start() {
         LoginMain.instance = this;
-
-        // 登录UI弹出来
+        
         UiManager.showPanel(UiPanelEnum.loginPanel);
     }
 
