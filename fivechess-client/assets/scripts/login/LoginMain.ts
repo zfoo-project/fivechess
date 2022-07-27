@@ -52,7 +52,7 @@ export default class LoginMain extends cc.Component {
 
     processResponse(protocolId, packet) {
         if (protocolId == LoginResponse.prototype.protocolId()) {
-            cc.director.loadScene("hall");
+            cc.director.loadScene("main");
         }
     }
 
