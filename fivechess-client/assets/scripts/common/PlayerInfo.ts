@@ -3,5 +3,10 @@ export class PlayerInfo {
 
     public static account: string;
 
-    public static coin: number;
+    public static roleInfoVo: I_RoleInfoVo;
+}
+
+
+export interface I_RoleInfoVo {
+    gold: number,
 }

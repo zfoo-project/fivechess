@@ -4,6 +4,7 @@ import {NetManager} from "../common/NetManager";
 import {EventEnum} from "../common/EventEnum";
 import {EventManager} from "../common/EventManager";
 import LoginMain from "./LoginMain";
+import {PlayerInfo} from "../common/PlayerInfo";
 
 const {ccclass, property} = cc._decorator;
 

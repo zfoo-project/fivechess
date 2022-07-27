@@ -1,6 +1,6 @@
 
 
-class GameInfoVo {
+class RoleInfoVo {
 
     gold: number = 0;
 
@@ -8,7 +8,7 @@ class GameInfoVo {
         return 120;
     }
 
-    static write(buffer: any, packet: GameInfoVo | null) {
+    static write(buffer: any, packet: RoleInfoVo | null) {
         if (buffer.writePacketFlag(packet)) {
             return;
         }
@@ -19,15 +19,15 @@ class GameInfoVo {
         buffer.writeInt(packet.gold);
     }
 
-    static read(buffer: any): GameInfoVo | null {
+    static read(buffer: any): RoleInfoVo | null {
         if (!buffer.readBoolean()) {
             return null;
         }
-        const packet = new GameInfoVo();
+        const packet = new RoleInfoVo();
         const result0 = buffer.readInt();
         packet.gold = result0;
         return packet;
     }
 }
 
-export default GameInfoVo;
+export default RoleInfoVo;

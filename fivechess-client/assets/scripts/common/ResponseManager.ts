@@ -17,11 +17,11 @@ export class ResponseManager {
 }
 
 ResponseManager.commandFuncMap[LoginResponse.prototype.protocolId()] = function (packet: LoginResponse) {
-    PlayerInfo.account = packet.account;
     PlayerInfo.uid = packet.uid;
-    PlayerInfo.coin = packet.coin;
+    PlayerInfo.account = packet.account;
+    PlayerInfo.roleInfoVo = packet.roleInfoVo;
 }
 
 ResponseManager.commandFuncMap[MatchResponse.prototype.protocolId()] = function (packet: MatchResponse) {
-    PlayerInfo.matching = true;
+
 }

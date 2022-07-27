@@ -1,10 +1,10 @@
-import GameInfoVo from './common/GameInfoVo';
+import RoleInfoVo from './common/RoleInfoVo';
 
 
 class LoginResponse {
 
     account: string = '';
-    gameInfoVo: GameInfoVo | null = null;
+    roleInfoVo: RoleInfoVo | null = null;
     uid: number = 0;
 
     protocolId(): number {
@@ -20,7 +20,7 @@ class LoginResponse {
         }
 
         buffer.writeString(packet.account);
-        buffer.writePacket(packet.gameInfoVo, 120);
+        buffer.writePacket(packet.roleInfoVo, 120);
         buffer.writeLong(packet.uid);
     }
 
@@ -32,7 +32,7 @@ class LoginResponse {
         const result0 = buffer.readString();
         packet.account = result0;
         const result1 = buffer.readPacket(120);
-        packet.gameInfoVo = result1;
+        packet.roleInfoVo = result1;
         const result2 = buffer.readLong();
         packet.uid = result2;
         return packet;
