@@ -8,16 +8,13 @@ const {ccclass, property} = cc._decorator;
 @ccclass
 export default class HallPanel extends cc.Component {
     @property({type: cc.Label})
-    private lblAccount: cc.Label = null;
+    private lbl_account: cc.Label = null;
 
     @property({type: cc.Label})
-    private lblUid: cc.Label = null;
+    private lbl_coin: cc.Label = null;
 
     @property({type: cc.Label})
-    private lblCoin: cc.Label = null;
-
-    @property({type: cc.Label})
-    private lblMatching: cc.Label = null;
+    private lbl_matchStatus: cc.Label = null;
 
     onLoad() {
         NetManager.registerNetHandler(this);
@@ -32,9 +29,8 @@ export default class HallPanel extends cc.Component {
     }
 
     private init_view() {
-        this.lblAccount.string = PlayerInfo.account;
-        this.lblUid.string = PlayerInfo.uid.toString();
-        this.lblCoin.string = PlayerInfo.roleInfoVo.gold.toString();
+        this.lbl_account.string = PlayerInfo.account;
+        this.lbl_coin.string = PlayerInfo.roleInfoVo.gold.toString();
     }
 
     public btn_match() {
@@ -44,7 +40,7 @@ export default class HallPanel extends cc.Component {
 
     processResponse(protocolId, packet) {
         if (protocolId == MatchResponse.prototype.protocolId()) {
-            this.lblMatching.string = "匹配成功";
+            this.lbl_matchStatus.string = "匹配成功";
         }
     }
 }

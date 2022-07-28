@@ -12,6 +12,7 @@ import com.zfoo.orm.OrmContext;
 import com.zfoo.orm.model.anno.EntityCachesInjection;
 import com.zfoo.orm.model.cache.IEntityCaches;
 import com.zfoo.orm.util.MongoIdUtils;
+import com.zfoo.protocol.util.StringUtils;
 import org.springframework.stereotype.Controller;
 
 @Controller
@@ -24,6 +25,11 @@ public class LoginController {
     public void atLoginRequest(Session session, LoginRequest req) {
         String account = req.getAccount();
         String password = req.getPassword();
+
+        if (StringUtils.isBlank(account) || StringUtils.isBlank(password)) {
+            NetContext.getRouter().send(session, ErrorResponse.valueOf(ErrorCodeEnum.ACCOUNT_OR_PASSWORD_EMPTY_ERROR));
+            return;
+        }
 
         AccountEntity accountEntity = accountEntityCaches.load(account);
         if (accountEntity.checkNull()) {
