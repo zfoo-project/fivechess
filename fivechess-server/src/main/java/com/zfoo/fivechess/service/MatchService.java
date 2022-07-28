@@ -55,8 +55,7 @@ public class MatchService {
                 Player player = playerService.addAndGetPlayer(uid, roomId, seatId);
                 room.bindSeatIdWithPlayer(seatId, player);
 
-                // 通知游戏开始 里面存的不是uid为key
-
+                // 通知游戏开始
                 onlineService.sendMessage(uid, GameStartResponse.valueOf());
             }
         }
