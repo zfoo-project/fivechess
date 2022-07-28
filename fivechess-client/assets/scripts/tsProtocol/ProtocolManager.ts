@@ -15,6 +15,7 @@ import LoginRequest from './protocol/LoginRequest';
 import LoginResponse from './protocol/LoginResponse';
 import MatchRequest from './protocol/MatchRequest';
 import MatchResponse from './protocol/MatchResponse';
+import GameStartResponse from './protocol/GameStartResponse';
 
 const protocols = new Map<number, any>();
 
@@ -36,6 +37,7 @@ protocols.set(211, LoginRequest);
 protocols.set(212, LoginResponse);
 protocols.set(311, MatchRequest);
 protocols.set(312, MatchResponse);
+protocols.set(313, GameStartResponse);
 
 class ProtocolManager {
     static getProtocol(protocolId: number): any {

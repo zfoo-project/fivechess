@@ -41,5 +41,7 @@
 
         <protocol id="311" location="com.zfoo.fivechess.protocol.MatchRequest"/>
         <protocol id="312" location="com.zfoo.fivechess.protocol.MatchResponse"/>
+
+        <protocol id="313" location="com.zfoo.fivechess.protocol.GameStartResponse"/>
     </module>
 </protocols>

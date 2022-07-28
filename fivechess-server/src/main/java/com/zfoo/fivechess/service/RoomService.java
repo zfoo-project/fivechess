@@ -20,8 +20,12 @@ public class RoomService {
         return roomMap.get(roomId);
     }
 
-    public void addRoom(Room room) {
-        roomMap.computeIfAbsent(room.getRoomId(), k -> room);
+    public Room addAndGetRoom(int roomId) {
+        return roomMap.computeIfAbsent(roomId, k -> {
+            Room room = new Room();
+            room.setRoomId(roomId);
+            return room;
+        });
     }
 
     public void deleteRoomById(int roomId) {
