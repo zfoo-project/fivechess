@@ -12,7 +12,7 @@ import java.util.Map;
  * 管理在线的玩家
  */
 public class OnlineRoleManager {
-    private static Map<Long, Session> uidSessionMap = Maps.newConcurrentMap();
+    private static final Map<Long, Session> uidSessionMap = Maps.newConcurrentMap();
 
     public static void bindUidSession(long uid, Session session) {
         uidSessionMap.computeIfAbsent(uid, k -> session);
