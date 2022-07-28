@@ -5,6 +5,7 @@ import com.google.common.collect.Sets;
 import com.zfoo.fivechess.logic.Player;
 import com.zfoo.fivechess.logic.Room;
 import com.zfoo.fivechess.logic.RoomConst;
+import com.zfoo.fivechess.protocol.GameStartResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,9 @@ public class MatchService {
 
     @Autowired
     PlayerService playerService;
+
+    @Autowired
+    OnlineService onlineService;
 
     public static final String MATCH_HASH = "match_hash";
     private Set<Long> uidSet = Sets.newConcurrentHashSet();
@@ -52,8 +56,8 @@ public class MatchService {
                 room.bindSeatIdWithPlayer(seatId, player);
 
                 // 通知游戏开始 里面存的不是uid为key
-//                Session session = NetContext.getSessionManager().getServerSession(uid);
-//                NetContext.getRouter().send(session, GameStartResponse.valueOf());
+
+                onlineService.sendMessage(uid, GameStartResponse.valueOf());
             }
         }
     }
