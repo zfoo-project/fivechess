@@ -1,6 +1,7 @@
 package com.zfoo.fivechess.controller;
 
 import com.zfoo.event.model.anno.EventReceiver;
+import com.zfoo.fivechess.common.Constant;
 import com.zfoo.fivechess.protocol.MatchRequest;
 import com.zfoo.fivechess.protocol.MatchResponse;
 import com.zfoo.fivechess.service.MatchService;
@@ -24,12 +25,12 @@ public class HallController {
         LogUtils.game.info("match");
 
         Long uid = session.getAttribute(AttributeType.UID);
-        TaskBus.executor(MatchService.MATCH_HASH).execute(() -> {
-            boolean flag = matchService.addToMatch(uid);
+        TaskBus.executor(Constant.MATCH_HASH).execute(() -> {
+            boolean flag = matchService.addToMatchQueue(uid);
             NetContext.getRouter().send(session, MatchResponse.valueOf(flag));
 
             if (flag) {
-                matchService.checkMatchOk();
+                matchService.checkMatch();
             }
         });
     }
@@ -42,7 +43,7 @@ public class HallController {
             return;
         }
 
-        TaskBus.executor(MatchService.MATCH_HASH).execute(() -> {
+        TaskBus.executor(Constant.MATCH_HASH).execute(() -> {
             matchService.deleteFromMatchQueue(uid);
         });
     }
