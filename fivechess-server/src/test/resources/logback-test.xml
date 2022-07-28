@@ -15,15 +15,17 @@
         </encoder>
     </appender>
 
-    <!-- 根logger -->
-    <root level="info">
-        <appender-ref ref="zfoo_console"/>
-    </root>
-
     <logger name="ch.qos.logback" level="info"/>
     <logger name="org.springframework" level="info"/>
     <logger name="io.netty" level="info"/>
     <logger name="org.mongodb" level="warn"/>
     <logger name="com.intellij.rt" level="warn"/>
 
+    <!-- 游戏内 -->
+    <logger name="GAME" level="debug"/>
+
+    <!-- 根logger -->
+    <root level="info">
+        <appender-ref ref="zfoo_console"/>
+    </root>
 </configuration>

@@ -1,13 +1,16 @@
 package com.zfoo.fivechess.controller;
 
 import com.zfoo.fivechess.entity.AccountEntity;
-import com.zfoo.fivechess.enums.ErrorCodeEnum;
+import com.zfoo.fivechess.common.ErrorCodeEnum;
 import com.zfoo.fivechess.protocol.LoginRequest;
 import com.zfoo.fivechess.protocol.LoginResponse;
 import com.zfoo.fivechess.protocol.common.ErrorResponse;
+import com.zfoo.fivechess.utils.LogUtils;
 import com.zfoo.net.NetContext;
 import com.zfoo.net.router.receiver.PacketReceiver;
+import com.zfoo.net.session.model.AttributeType;
 import com.zfoo.net.session.model.Session;
+import com.zfoo.net.task.TaskBus;
 import com.zfoo.orm.OrmContext;
 import com.zfoo.orm.model.anno.EntityCachesInjection;
 import com.zfoo.orm.model.cache.IEntityCaches;
@@ -31,22 +34,29 @@ public class LoginController {
             return;
         }
 
-        AccountEntity accountEntity = accountEntityCaches.load(account);
-        if (accountEntity.checkNull()) {
-            var uid = MongoIdUtils.getIncrementIdFromMongoDefault(AccountEntity.class);
+        TaskBus.executor(account).execute(() -> {
+            LogUtils.game.info("login");
 
-            OrmContext.getAccessor().insert(AccountEntity.valueOf(uid, account, password));
-            accountEntityCaches.invalidate(account);
+            AccountEntity accountEntity = accountEntityCaches.load(account);
+            if (accountEntity.checkNull()) {
+                var uid = MongoIdUtils.getIncrementIdFromMongoDefault(AccountEntity.class);
 
-            accountEntity = accountEntityCaches.load(account);
-        } else {
-            if (!accountEntity.getPassword().equals(password)) {
-                NetContext.getRouter().send(session, ErrorResponse.valueOf(ErrorCodeEnum.PASSWORD_ERROR));
-                return;
+                OrmContext.getAccessor().insert(AccountEntity.valueOf(uid, account, password));
+                accountEntityCaches.invalidate(account);
+
+                accountEntity = accountEntityCaches.load(account);
+            } else {
+                if (!accountEntity.getPassword().equals(password)) {
+                    NetContext.getRouter().send(session, ErrorResponse.valueOf(ErrorCodeEnum.PASSWORD_ERROR));
+                    return;
+                }
             }
-        }
 
-        var response = LoginResponse.valueOf(accountEntity.getUid(), accountEntity.getId(), accountEntity.getRoleInfoVo());
-        NetContext.getRouter().send(session, response);
+            // 绑定下uid
+            session.putAttribute(AttributeType.UID, accountEntity.getUid());
+
+            var response = LoginResponse.valueOf(accountEntity.getUid(), accountEntity.getId(), accountEntity.getRoleInfoVo());
+            NetContext.getRouter().send(session, response);
+        });
     }
 }

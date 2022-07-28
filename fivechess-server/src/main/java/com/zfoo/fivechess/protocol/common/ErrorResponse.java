@@ -1,6 +1,6 @@
 package com.zfoo.fivechess.protocol.common;
 
-import com.zfoo.fivechess.enums.ErrorCodeEnum;
+import com.zfoo.fivechess.common.ErrorCodeEnum;
 import com.zfoo.protocol.IPacket;
 
 public class ErrorResponse implements IPacket {

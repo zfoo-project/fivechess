@@ -2,7 +2,7 @@
 
 class MatchResponse {
 
-    
+    status: boolean = false;
 
     protocolId(): number {
         return 312;
@@ -16,7 +16,7 @@ class MatchResponse {
             return;
         }
 
-        
+        buffer.writeBoolean(packet.status);
     }
 
     static read(buffer: any): MatchResponse | null {
@@ -24,7 +24,8 @@ class MatchResponse {
             return null;
         }
         const packet = new MatchResponse();
-        
+        const result0 = buffer.readBoolean(); 
+        packet.status = result0;
         return packet;
     }
 }

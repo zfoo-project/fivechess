@@ -38,9 +38,9 @@ export default class HallPanel extends cc.Component {
         NetManager.sendMessage(request);
     }
 
-    processResponse(protocolId, packet) {
+    processResponse(protocolId, response) {
         if (protocolId == MatchResponse.prototype.protocolId()) {
-            this.lbl_matchStatus.string = "匹配成功";
+            this.lbl_matchStatus.string = "匹配中...";
         }
     }
 }

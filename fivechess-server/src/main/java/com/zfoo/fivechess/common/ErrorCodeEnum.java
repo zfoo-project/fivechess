@@ -1,4 +1,4 @@
-package com.zfoo.fivechess.enums;
+package com.zfoo.fivechess.common;
 
 import com.google.common.collect.Sets;
 import com.zfoo.fivechess.protocol.common.ErrorResponse;

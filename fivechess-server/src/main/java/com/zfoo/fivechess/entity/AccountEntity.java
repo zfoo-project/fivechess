@@ -24,10 +24,19 @@ public class AccountEntity implements IEntity<String> {
     @Id
     private String id;
 
+    /**
+     * 密码
+     */
     private String password;
 
+    /**
+     * 注册时间
+     */
     private long regTime;
 
+    /**
+     * 游戏内玩家
+     */
     private RoleInfoVo roleInfoVo = new RoleInfoVo();
 
     public static AccountEntity valueOf(long uid, String account, String password) {
