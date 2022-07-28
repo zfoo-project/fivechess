@@ -18,7 +18,7 @@ public class OnlineRoleManager {
         uidSessionMap.computeIfAbsent(uid, k -> session);
     }
 
-    public static void removeUid(long uid) {
+    public static void removeSessionByUid(long uid) {
         uidSessionMap.remove(uid);
     }
 
