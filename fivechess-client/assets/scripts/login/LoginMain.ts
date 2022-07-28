@@ -7,7 +7,7 @@ const {ccclass, property} = cc._decorator;
 export default class LoginMain extends cc.Component {
     public static instance: LoginMain = null;
 
-    @property({type: cc.String})
+    @property
     public url: string = "ws://192.168.3.2:18000/websocket";
 
     start() {

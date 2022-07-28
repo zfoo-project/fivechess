@@ -1,3 +1,5 @@
+import TipPanel from "./TipPanel";
+
 const {ccclass, property} = cc._decorator;
 
 @ccclass
@@ -20,9 +22,16 @@ export class UiManager extends cc.Component {
             cb && cb(node);
         });
     }
+
+    public static showTip(msg: string, show_close_btn: boolean, yes_cb ?: () => void) {
+        this.showPanel(UiPanelEnum.tipPanel, (node) => {
+            node.getComponent(TipPanel).init(msg, show_close_btn, yes_cb);
+        });
+    }
 }
 
 export const enum UiPanelEnum {
-    loginPanel = "loginPanel",
-    hallPanel = "hallPanel",
+    tipPanel = "tipPanel",         // 提示面板
+    loginPanel = "loginPanel",     // 登录面板
+    hallPanel = "hallPanel",       // 大厅面板
 }

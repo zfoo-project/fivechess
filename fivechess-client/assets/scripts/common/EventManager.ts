@@ -1,3 +1,5 @@
+import {GlobalEventProcessManager} from "./GlobalEventProcessManager";
+
 /**
  * 负责事件订阅与发布
  */
@@ -20,6 +22,8 @@ export class EventManager {
     }
 
     public static sendEvent(eventId, event) {
+        GlobalEventProcessManager.processEvent(eventId, event);
+
         EventManager.eventHandlerSet.forEach(handler => {
             // @ts-ignore
             handler.processEvent(eventId, event);
