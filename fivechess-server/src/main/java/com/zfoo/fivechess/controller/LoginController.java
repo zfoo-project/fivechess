@@ -1,31 +1,29 @@
 package com.zfoo.fivechess.controller;
 
 import com.zfoo.event.model.anno.EventReceiver;
-import com.zfoo.fivechess.common.ErrorCodeEnum;
-import com.zfoo.fivechess.common.OnlineRoleManager;
 import com.zfoo.fivechess.entity.AccountEntity;
 import com.zfoo.fivechess.protocol.LoginRequest;
 import com.zfoo.fivechess.protocol.LoginResponse;
-import com.zfoo.fivechess.protocol.common.ErrorResponse;
-import com.zfoo.fivechess.utils.LogUtils;
+import com.zfoo.fivechess.protocol.common.RoleInfoVo;
+import com.zfoo.fivechess.service.LoginService;
+import com.zfoo.fivechess.service.OnlineRoleService;
 import com.zfoo.net.NetContext;
 import com.zfoo.net.core.tcp.model.ServerSessionInactiveEvent;
 import com.zfoo.net.router.receiver.PacketReceiver;
 import com.zfoo.net.session.model.AttributeType;
 import com.zfoo.net.session.model.Session;
 import com.zfoo.net.task.TaskBus;
-import com.zfoo.orm.OrmContext;
-import com.zfoo.orm.model.anno.EntityCachesInjection;
-import com.zfoo.orm.model.cache.IEntityCaches;
-import com.zfoo.orm.util.MongoIdUtils;
-import com.zfoo.protocol.util.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 @Controller
 public class LoginController {
 
-    @EntityCachesInjection
-    private IEntityCaches<String, AccountEntity> accountEntityCaches;
+    @Autowired
+    LoginService loginService;
+
+    @Autowired
+    OnlineRoleService onlineRoleService;
 
     @EventReceiver
     public void onServerSessionInactiveEvent(ServerSessionInactiveEvent event) {
@@ -35,7 +33,7 @@ public class LoginController {
             return;
         }
 
-        OnlineRoleManager.removeSessionByUid(uid);
+        onlineRoleService.removeSessionByUid(uid);
     }
 
     @PacketReceiver
@@ -43,37 +41,29 @@ public class LoginController {
         String account = req.getAccount();
         String password = req.getPassword();
 
-        if (StringUtils.isBlank(account) || StringUtils.isBlank(password)) {
-            NetContext.getRouter().send(session, ErrorResponse.valueOf(ErrorCodeEnum.ACCOUNT_OR_PASSWORD_EMPTY_ERROR));
+        // 检查登录参数
+        if (!loginService.checkLoginParam(session, account, password)) {
             return;
         }
 
         TaskBus.executor(account).execute(() -> {
-            LogUtils.game.info("login");
+            AccountEntity accountEntity = loginService.selectAndRegisterAccount(account, password);
 
-            AccountEntity accountEntity = accountEntityCaches.load(account);
-            if (accountEntity.checkNull()) {
-                var uid = MongoIdUtils.getIncrementIdFromMongoDefault(AccountEntity.class);
-
-                OrmContext.getAccessor().insert(AccountEntity.valueOf(uid, account, password));
-                accountEntityCaches.invalidate(account);
-
-                accountEntity = accountEntityCaches.load(account);
-            } else {
-                if (!accountEntity.getPassword().equals(password)) {
-                    NetContext.getRouter().send(session, ErrorResponse.valueOf(ErrorCodeEnum.PASSWORD_ERROR));
-                    return;
-                }
+            // 检查密码
+            String dbPassword = accountEntity.getPassword();
+            if (!loginService.checkAccountAndPassword(session, dbPassword, password)) {
+                return;
             }
 
-            // 绑定下uid
-            session.putAttribute(AttributeType.UID, accountEntity.getUid());
+            long uid = accountEntity.getUid();
 
-            OnlineRoleManager.bindUidSession(accountEntity.getUid(), session);
+            TaskBus.executor(uid).execute(() -> {
+                loginService.bindUidWithSession(session, uid);
 
-            var response = LoginResponse.valueOf(accountEntity.getUid(), accountEntity.getId(), accountEntity.getRoleInfoVo());
-            NetContext.getRouter().send(session, response);
+                RoleInfoVo roleInfoVo = accountEntity.getRoleInfoVo();
+                var response = LoginResponse.valueOf(uid, account, roleInfoVo);
+                NetContext.getRouter().send(session, response);
+            });
         });
     }
-
 }

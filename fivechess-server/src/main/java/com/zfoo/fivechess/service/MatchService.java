@@ -2,7 +2,6 @@ package com.zfoo.fivechess.service;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.zfoo.fivechess.common.OnlineRoleManager;
 import com.zfoo.fivechess.logic.Player;
 import com.zfoo.fivechess.logic.Room;
 import com.zfoo.fivechess.logic.RoomConst;
@@ -21,6 +20,9 @@ public class MatchService {
 
     @Autowired
     PlayerService playerService;
+
+    @Autowired
+    OnlineRoleService onlineRoleService;
 
     private Set<Long> matchingUidSet = Sets.newConcurrentHashSet();
 
@@ -50,8 +52,9 @@ public class MatchService {
                 // 绑定好座位
                 Player player = playerService.addAndGetPlayer(uid, roomId, seatId);
                 room.bindSeatIdWithPlayer(seatId, player);
+
                 // 通知游戏开始
-                OnlineRoleManager.sendMessage(uid, GameStartResponse.valueOf());
+                onlineRoleService.sendMessage(uid, GameStartResponse.valueOf());
             }
         }
     }

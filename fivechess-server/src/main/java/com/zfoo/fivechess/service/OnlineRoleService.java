@@ -1,9 +1,10 @@
-package com.zfoo.fivechess.common;
+package com.zfoo.fivechess.service;
 
 import com.google.common.collect.Maps;
 import com.zfoo.net.NetContext;
 import com.zfoo.net.session.model.Session;
 import com.zfoo.protocol.IPacket;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
@@ -11,18 +12,19 @@ import java.util.Map;
 /**
  * 管理在线的玩家
  */
-public class OnlineRoleManager {
-    private static final Map<Long, Session> uidSessionMap = Maps.newConcurrentMap();
+@Service
+public class OnlineRoleService {
+    private  final Map<Long, Session> uidSessionMap = Maps.newConcurrentMap();
 
-    public static void bindUidSession(long uid, Session session) {
+    public  void bindUidSession(long uid, Session session) {
         uidSessionMap.computeIfAbsent(uid, k -> session);
     }
 
-    public static void removeSessionByUid(long uid) {
+    public  void removeSessionByUid(long uid) {
         uidSessionMap.remove(uid);
     }
 
-    public static void sendMessage(long uid, IPacket packet) {
+    public  void sendMessage(long uid, IPacket packet) {
         var session = uidSessionMap.get(uid);
         if (session == null) {
             return;
