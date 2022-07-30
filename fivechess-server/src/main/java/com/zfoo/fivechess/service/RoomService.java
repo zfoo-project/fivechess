@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Service
 public class RoomService {
     private AtomicInteger roomId = new AtomicInteger(0);
+    
     private Map<Integer, Room> roomMap = Maps.newConcurrentMap();
 
     public int getNextRoomId() {

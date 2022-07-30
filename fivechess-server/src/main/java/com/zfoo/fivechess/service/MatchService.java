@@ -6,6 +6,7 @@ import com.zfoo.fivechess.logic.Player;
 import com.zfoo.fivechess.logic.Room;
 import com.zfoo.fivechess.logic.RoomConst;
 import com.zfoo.fivechess.protocol.GameStartResponse;
+import com.zfoo.net.task.TaskBus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,20 +43,23 @@ public class MatchService {
             matchingUidSet.removeAll(matchedUidList);
             // 新房间号
             int roomId = roomService.getNextRoomId();
-            // 分配房间
-            Room room = roomService.addAndGetRoom(roomId);
-            // 把匹配到的人加入进来
-            for (int i = 0; i < RoomConst.PLAYER_NUM; i++) {
-                long uid = matchedUidList.get(i);
-                // 分到到的座位号
-                int seatId = i;
-                // 绑定好座位
-                Player player = playerService.addAndGetPlayer(uid, roomId, seatId);
-                room.bindSeatIdWithPlayer(seatId, player);
 
-                // 通知游戏开始
-                onlineRoleService.sendMessage(uid, GameStartResponse.valueOf());
-            }
+            // 有了房间号后，所有的业务逻辑，都在房间线程执行(从无房间号到有房间号，是一个临界的过程)
+            TaskBus.executor(roomId).execute(() -> {
+                // 分配房间
+                Room room = roomService.addAndGetRoom(roomId);
+                // 把匹配到的人加入进来
+                for (int seatId = 0; seatId < RoomConst.PLAYER_NUM; seatId++) {
+                    // 匹配到的这个人的uid
+                    long uid = matchedUidList.get(seatId);
+                    // 绑定好座位
+                    Player player = playerService.addAndGetPlayer(uid, roomId, seatId);
+                    room.bindSeatIdWithPlayer(seatId, player);
+                }
+
+                // 座位全部安排好后，通知游戏开始
+                matchedUidList.forEach(uid -> onlineRoleService.sendMessage(uid, GameStartResponse.valueOf()));
+            });
         }
     }
 }
