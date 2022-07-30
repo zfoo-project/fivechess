@@ -94,7 +94,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "edit_account",
+    "_name": "edit_uname",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1
@@ -618,7 +618,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "edit_password",
+    "_name": "edit_pwd",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1
@@ -1663,10 +1663,10 @@
       "__id__": 1
     },
     "_enabled": true,
-    "editAccount": {
+    "edit_uname": {
       "__id__": 15
     },
-    "editPassword": {
+    "edit_upwd": {
       "__id__": 30
     },
     "_id": ""

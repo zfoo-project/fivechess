@@ -28,20 +28,70 @@
         <protocol id="114" location="com.zfoo.net.packet.common.TripleLong"/>
         <protocol id="115" location="com.zfoo.net.packet.common.TripleString"/>
         <protocol id="116" location="com.zfoo.net.packet.common.TripleLSS"/>
-
-        <protocol id="120" location="com.zfoo.fivechess.protocol.common.RoleInfoVo"/>
     </module>
 
     <module id="3" name="game" minId="201" maxId="1000">
+        <!--通用协议号-->
         <protocol id="201" location="com.zfoo.fivechess.protocol.common.ErrorResponse"/>
+        <protocol id="202" location="com.zfoo.fivechess.protocol.common.RoleInfoVo"/>
+        <protocol id="203" location="com.zfoo.fivechess.protocol.common.ChessItem"/>
 
-        <protocol id="211" location="com.zfoo.fivechess.protocol.LoginRequest"/>
-        <protocol id="212" location="com.zfoo.fivechess.protocol.LoginResponse"/>
+        <!--游戏内协议号-->
+        <protocol id="211" location="com.zfoo.fivechess.protocol.UnameLoginRequest"/>
+        <protocol id="212" location="com.zfoo.fivechess.protocol.UnameLoginResponse"/>
 
+        <protocol id="213" location="com.zfoo.fivechess.protocol.CreateRoomRequest"/>
+        <protocol id="214" location="com.zfoo.fivechess.protocol.CreateRoomResponse"/>
 
-        <protocol id="311" location="com.zfoo.fivechess.protocol.MatchRequest"/>
-        <protocol id="312" location="com.zfoo.fivechess.protocol.MatchResponse"/>
+        <protocol id="215" location="com.zfoo.fivechess.protocol.JoinRoomRequest"/>
+        <protocol id="216" location="com.zfoo.fivechess.protocol.JoinRoomResponse"/>
 
-        <protocol id="313" location="com.zfoo.fivechess.protocol.GameStartResponse"/>
+        <protocol id="217" location="com.zfoo.fivechess.protocol.UserArrivedResponse"/>
+
+        <protocol id="218" location="com.zfoo.fivechess.protocol.GameStartedResponse"/>
+
+        <protocol id="219" location="com.zfoo.fivechess.protocol.GiveChessRequest"/>
+        <protocol id="220" location="com.zfoo.fivechess.protocol.GiveChessResponse"/>
+
+        <protocol id="221" location="com.zfoo.fivechess.protocol.TurnToPlayerResponse"/>
+
+        <protocol id="222" location="com.zfoo.fivechess.protocol.CheckoutResponse"/>
+
+        <protocol id="223" location="com.zfoo.fivechess.protocol.UserQuitResponse"/>
+
+        <protocol id="224" location="com.zfoo.fivechess.protocol.ReconnectInfoResponse"/>
+
+        <protocol id="225" location="com.zfoo.fivechess.protocol.PlayerLostConnectResponse"/>
+
+        <protocol id="226" location="com.zfoo.fivechess.protocol.MySeatInfoResponse"/>
     </module>
 </protocols>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

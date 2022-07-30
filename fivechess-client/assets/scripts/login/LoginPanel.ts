@@ -1,22 +1,18 @@
-import LoginRequest from "../tsProtocol/protocol/LoginRequest";
-import LoginResponse from "../tsProtocol/protocol/LoginResponse";
 import {NetManager} from "../common/NetManager";
-import {EventEnum} from "../common/EventEnum";
 import {EventManager} from "../common/EventManager";
 import LoginMain from "./LoginMain";
-import {UiManager} from "../common/UiManager";
+import UnameLoginResponse from "../tsProtocol/protocol/UnameLoginResponse";
+import UnameLoginRequest from "../tsProtocol/protocol/UnameLoginRequest";
 
 const {ccclass, property} = cc._decorator;
 
 @ccclass
 export default class LoginPanel extends cc.Component {
-
-    private isConnecting = false;
+    @property({type: cc.EditBox})
+    private edit_uname: cc.EditBox = null;
 
     @property({type: cc.EditBox})
-    private editAccount: cc.EditBox = null;
-    @property({type: cc.EditBox})
-    private editPassword: cc.EditBox = null;
+    private edit_upwd: cc.EditBox = null;
 
     onLoad() {
         EventManager.registerEventHandler(this);
@@ -24,7 +20,6 @@ export default class LoginPanel extends cc.Component {
     }
 
     start() {
-        this.isConnecting = true;
         NetManager.connect(LoginMain.instance.url);
     }
 
@@ -34,30 +29,25 @@ export default class LoginPanel extends cc.Component {
     }
 
     btn_login() {
-        if (this.isConnecting) {
-            return;
-        }
-
-        let request = new LoginRequest();
-        request.account = this.editAccount.string;
-        request.password = this.editPassword.string;
+        let request = new UnameLoginRequest();
+        request.uname = this.edit_uname.string;
+        request.upwd = this.edit_upwd.string;
         NetManager.sendMessage(request);
     }
 
-    processResponse(protocolId, response) {
-        if (protocolId == LoginResponse.prototype.protocolId()) {
-            cc.director.loadScene("main");
-        }
-    }
+    processResponse(protocolId, packet) {
+        if (protocolId == UnameLoginResponse.prototype.protocolId()) {
+            let response: UnameLoginResponse = packet;
 
-    processEvent(eventId, event) {
-        if (eventId == EventEnum.CONNECTED_EVENT) {
-            this.isConnecting = false;
-        } else if (eventId == EventEnum.DISCONNECT_EVENT) {
-            this.isConnecting = true;
-            UiManager.showTip("连接服务器失败", false, () => {
-                NetManager.connect(LoginMain.instance.url);
-            });
+            if (response.status != 1) {
+                cc.error("登录失败", response)
+                return;
+            }
+            if (response.inRoom) {
+                cc.director.loadScene("main");
+            } else {
+                cc.director.loadScene("game");
+            }
         }
     }
 }

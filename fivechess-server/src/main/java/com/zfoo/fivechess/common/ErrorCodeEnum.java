@@ -10,10 +10,7 @@ import java.util.Set;
  */
 @Getter
 public enum ErrorCodeEnum {
-    ACCOUNT_OR_PASSWORD_EMPTY_ERROR(-1, "账号和密码不能为空"),
-    PASSWORD_ERROR(-2, "密码错误"),
-    ALREADY_MATCHING_ERROR(-3, "正在匹配中"),
-
+    PASSWORD_ERROR(-1, "密码错误"),
     ;
     private int errorCode;
     private String message;
