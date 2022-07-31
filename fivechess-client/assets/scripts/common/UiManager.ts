@@ -10,13 +10,16 @@ export class UiManager extends cc.Component {
         UiManager.node = this.node;
     }
 
+    /**
+     * @param url
+     * @param cb 加载完毕执行的回调
+     * @private
+     */
     private static showPanel(url: string, cb ?: (node: cc.Node) => void) {
         cc.resources.load("uiPanel/" + url, (err, res: cc.Prefab) => {
-            cc.log("bbb", url);
             if (err) {
                 cc.error(err);
                 cb && cb(null);
-
                 return
             }
 
@@ -41,7 +44,4 @@ export class UiManager extends cc.Component {
 
 export const enum UiPanelEnum {
     tipPanel = "tipPanel",         // 提示面板
-    loginPanel = "loginPanel",     // 登录面板
-    hallPanel = "hallPanel",       // 大厅面板
-    gamePanel = "gamePanel",       // 大厅面板
 }
