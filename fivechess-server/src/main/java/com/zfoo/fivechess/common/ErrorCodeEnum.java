@@ -11,11 +11,13 @@ import java.util.Set;
 @Getter
 public enum ErrorCodeEnum {
     PASSWORD_ERROR(-1, "密码错误"),
+
     ;
-    private int errorCode;
-    private String message;
+    private final int errorCode;
+    private final String message;
 
     static {
+        // 检查重复errorCode
         Set<Integer> set = Sets.newHashSet();
         for (ErrorCodeEnum errorCodeEnum : values()) {
             if (!set.add(errorCodeEnum.errorCode)) {
