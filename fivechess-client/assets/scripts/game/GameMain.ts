@@ -5,7 +5,7 @@ const {ccclass, property} = cc._decorator;
 
 @ccclass
 export default class GameMain extends cc.Component {
-    start() {
+    onLoad() {
         UiManager.showPanel(UiPanelEnum.gamePanel);
     }
 

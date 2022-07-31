@@ -10,9 +10,8 @@ export default class LoginMain extends cc.Component {
     @property
     public url: string = "ws://192.168.3.2:18000/websocket";
 
-    start() {
+    onLoad() {
         LoginMain.instance = this;
-        
         UiManager.showPanel(UiPanelEnum.loginPanel);
     }
 

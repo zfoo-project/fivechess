@@ -5,7 +5,7 @@ const {ccclass, property} = cc._decorator;
 
 @ccclass
 export default class HallMain extends cc.Component {
-    start() {
+    onLoad() {
         UiManager.showPanel(UiPanelEnum.hallPanel);
     }
 

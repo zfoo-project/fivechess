@@ -7,7 +7,7 @@ export default class SceneManager {
     public static loadScene(sceneName) {
         NetManager.setLockMsgQueue(true);
         cc.director.loadScene(sceneName, () => {
-            NetManager.setLockMsgQueue(false);
+
         });
     }
 
