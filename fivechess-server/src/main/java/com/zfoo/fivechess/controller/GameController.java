@@ -134,6 +134,9 @@ public class GameController {
         }
 
         Player player = PlayerManager.getPlayerByUid(uid);
+        if (player == null) {
+            return;
+        }
 
         Table table = TableManager.getTableByTableId(player.getTableId());
 

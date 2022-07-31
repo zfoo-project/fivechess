@@ -44,9 +44,9 @@ export default class LoginPanel extends cc.Component {
                 return;
             }
             if (response.inRoom) {
-                cc.director.loadScene("main");
-            } else {
                 cc.director.loadScene("game");
+            } else {
+                cc.director.loadScene("main");
             }
         }
     }

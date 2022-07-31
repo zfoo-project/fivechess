@@ -34,4 +34,5 @@ export const enum UiPanelEnum {
     tipPanel = "tipPanel",         // 提示面板
     loginPanel = "loginPanel",     // 登录面板
     hallPanel = "hallPanel",       // 大厅面板
+    gamePanel = "gamePanel",       // 大厅面板
 }
