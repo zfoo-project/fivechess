@@ -1,5 +1,6 @@
 package com.zfoo.fivechess.protocol;
 
+import com.google.common.collect.Lists;
 import com.zfoo.fivechess.protocol.common.ChessItem;
 import com.zfoo.protocol.IPacket;
 
@@ -10,7 +11,7 @@ public class ReconnectInfoResponse implements IPacket {
 
     private int buttonId;
     private int seatId;
-    private List<ChessItem> chessItems;
+    private List<ChessItem> chessItems = Lists.newArrayList();
 
     public int getButtonId() {
         return buttonId;

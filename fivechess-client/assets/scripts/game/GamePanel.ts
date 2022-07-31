@@ -9,6 +9,8 @@ import UserQuitResponse from "../tsProtocol/protocol/UserQuitResponse";
 import ReconnectInfoResponse from "../tsProtocol/protocol/ReconnectInfoResponse";
 import PlayerLostConnectResponse from "../tsProtocol/protocol/PlayerLostConnectResponse";
 import GiveChessRequest from "../tsProtocol/protocol/GiveChessRequest";
+import {UiManager} from "../common/UiManager";
+import SceneManager from "../common/SceneManager";
 
 const {ccclass, property} = cc._decorator;
 
@@ -83,6 +85,26 @@ export default class GamePanel extends cc.Component {
         this.cur_sv_id = turnToSeatId;
     }
 
+    private reset_chess_at(xblock: number, yblock: number, color: number) {
+        let sp = null;
+        if (color == 1) {
+            sp = this.black_spriteframe;
+        } else {
+            sp = this.white_spriteframe;
+        }
+
+        let node = new cc.Node();
+        let s_comp = node.addComponent(cc.Sprite);
+        s_comp.spriteFrame = sp;
+
+        let xpos = (xblock - this.CENTER_X) * this.BLOCK_W;
+        let ypos = (yblock - this.CENTER_Y) * this.BLOCK_H;
+        this.node_chess_disk.addChild(node);
+        node.x = xpos;
+        node.y = ypos;
+        node.scale = 2;
+    }
+
     processResponse(protocolId, packet) {
         if (protocolId == MySeatInfoResponse.prototype.protocolId()) {
             let response: MySeatInfoResponse = packet;
@@ -109,7 +131,7 @@ export default class GamePanel extends cc.Component {
             }
 
             let sp = null;
-            if (this.sv_seatId == this.button_id) {
+            if (response.seatId == this.button_id) {
                 sp = this.black_spriteframe;
             } else {
                 sp = this.white_spriteframe;
@@ -127,13 +149,29 @@ export default class GamePanel extends cc.Component {
             node.scale = 2;
 
         } else if (protocolId == CheckoutResponse.prototype.protocolId()) {
-
+            UiManager.showTip("游戏结束", false, () => {
+                SceneManager.loadScene("main");
+            });
         } else if (protocolId == UserQuitResponse.prototype.protocolId()) {
 
         } else if (protocolId == ReconnectInfoResponse.prototype.protocolId()) {
+            this.node_chess_disk.destroyAllChildren();
 
+            let response: ReconnectInfoResponse = packet;
+            this.button_id = response.buttonId;
+            this.turn_to_player(response.seatId);
+
+            for (let i = 0; i < response.chessItems.length; i++) {
+                let xblock = response.chessItems[i].xBlock;
+                let yblock = response.chessItems[i].yBlock;
+                let color = response.chessItems[i].color;
+
+                this.reset_chess_at(xblock, yblock, color);
+            }
         } else if (protocolId == PlayerLostConnectResponse.prototype.protocolId()) {
 
         }
     }
+
+
 }
