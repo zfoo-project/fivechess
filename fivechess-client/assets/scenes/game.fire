@@ -295,6 +295,9 @@
       "__id__": 2
     },
     "_enabled": true,
+    "gamePanel": {
+      "__uuid__": "c3cce478-d245-4b20-b133-328b9ea2ad6a"
+    },
     "_id": "c2PpKUGYNH1JlyYvK7mjtN"
   }
 ]

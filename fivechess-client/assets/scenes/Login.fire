@@ -295,6 +295,9 @@
       "__id__": 2
     },
     "_enabled": true,
+    "loginPanel": {
+      "__uuid__": "c92509bc-6849-49bb-b674-ceec04759157"
+    },
     "url": "ws://192.168.3.2:18000/websocket",
     "_id": "05uiiUwE5KWJl25A4uFHp7"
   }

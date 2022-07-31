@@ -10,11 +10,14 @@ export class UiManager extends cc.Component {
         UiManager.node = this.node;
     }
 
-    public static showPanel(url: string, cb ?: (node: cc.Node) => void) {
+    private static showPanel(url: string, cb ?: (node: cc.Node) => void) {
         cc.resources.load("uiPanel/" + url, (err, res: cc.Prefab) => {
+            cc.log("bbb", url);
             if (err) {
                 cc.error(err);
-                return cb && cb(null);
+                cb && cb(null);
+
+                return
             }
 
             let node = cc.instantiate(res);
@@ -23,6 +26,12 @@ export class UiManager extends cc.Component {
         });
     }
 
+    /**
+     * 提示
+     * @param msg
+     * @param show_close_btn
+     * @param yes_cb
+     */
     public static showTip(msg: string, show_close_btn: boolean, yes_cb ?: () => void) {
         this.showPanel(UiPanelEnum.tipPanel, (node) => {
             node.getComponent(TipPanel).init(msg, show_close_btn, yes_cb);

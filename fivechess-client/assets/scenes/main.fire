@@ -295,6 +295,9 @@
       "__id__": 2
     },
     "_enabled": true,
+    "hallPanel": {
+      "__uuid__": "d11391f7-9d17-4b99-af13-20fef43fcc26"
+    },
     "_id": "4c/XTmMeJMRZgcYYtKqpY/"
   }
 ]

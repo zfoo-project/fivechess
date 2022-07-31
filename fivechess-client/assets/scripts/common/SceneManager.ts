@@ -5,10 +5,9 @@ const {ccclass, property} = cc._decorator;
 
 export default class SceneManager {
     public static loadScene(sceneName) {
-        NetManager.setLockMsgQueue(true);
+        NetManager.setChangeScene(true);
         cc.director.loadScene(sceneName, () => {
-
+            NetManager.setChangeScene(false);
         });
     }
-
 }

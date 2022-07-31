@@ -1,12 +1,16 @@
 import {NetManager} from "../common/NetManager";
-import {UiManager, UiPanelEnum} from "../common/UiManager";
 
 const {ccclass, property} = cc._decorator;
 
 @ccclass
 export default class GameMain extends cc.Component {
+
+    @property({type: cc.Prefab})
+    private gamePanel: cc.Prefab = null;
+
     onLoad() {
-        UiManager.showPanel(UiPanelEnum.gamePanel);
+        let gamePanel = cc.instantiate(this.gamePanel);
+        this.node.addChild(gamePanel);
     }
 
     update(dt) {

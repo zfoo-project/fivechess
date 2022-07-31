@@ -1,6 +1,4 @@
 import {NetManager} from "../common/NetManager";
-import {EventManager} from "../common/EventManager";
-import LoginMain from "./LoginMain";
 import UnameLoginResponse from "../tsProtocol/protocol/UnameLoginResponse";
 import UnameLoginRequest from "../tsProtocol/protocol/UnameLoginRequest";
 import SceneManager from "../common/SceneManager";
@@ -16,16 +14,10 @@ export default class LoginPanel extends cc.Component {
     private edit_upwd: cc.EditBox = null;
 
     onLoad() {
-        EventManager.registerEventHandler(this);
         NetManager.registerNetHandler(this);
     }
 
-    start() {
-        NetManager.connect(LoginMain.instance.url);
-    }
-
     onDestroy() {
-        EventManager.unregisterEventHandler(this);
         NetManager.unregisterNetHandler(this);
     }
 

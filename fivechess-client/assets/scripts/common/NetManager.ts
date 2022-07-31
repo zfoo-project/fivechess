@@ -20,7 +20,7 @@ export class NetManager {
     private static responseMsgQueue = [];
     private static responseHandlerSet = new Set();
 
-    private static lockMsgQueue: boolean = false;
+    private static isChangeScene: boolean = false;
 
     /**
      * 连接服务器
@@ -120,7 +120,7 @@ export class NetManager {
             return;
         }
 
-        if (NetManager.lockMsgQueue) {
+        if (NetManager.isChangeScene) {
             return;
         }
 
@@ -138,7 +138,7 @@ export class NetManager {
         });
     }
 
-    public static setLockMsgQueue(lockMsgQueue: boolean) {
-        this.lockMsgQueue = lockMsgQueue;
+    public static setChangeScene(isChangeScene: boolean) {
+        NetManager.isChangeScene = isChangeScene;
     }
 }
