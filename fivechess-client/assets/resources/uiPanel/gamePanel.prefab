@@ -373,6 +373,18 @@
       "__id__": 1
     },
     "_enabled": true,
+    "black_spriteframe": {
+      "__uuid__": "2f98bc0d-1add-4764-b29c-20075a18f833"
+    },
+    "white_spriteframe": {
+      "__uuid__": "a8d907f3-d5f7-49af-a7b0-2b98150dafef"
+    },
+    "node_chess_disk": {
+      "__id__": 2
+    },
+    "lbl_roomId": {
+      "__id__": 6
+    },
     "_id": ""
   },
   {
