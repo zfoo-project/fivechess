@@ -3,6 +3,7 @@ import {EventManager} from "../common/EventManager";
 import LoginMain from "./LoginMain";
 import UnameLoginResponse from "../tsProtocol/protocol/UnameLoginResponse";
 import UnameLoginRequest from "../tsProtocol/protocol/UnameLoginRequest";
+import SceneManager from "../common/SceneManager";
 
 const {ccclass, property} = cc._decorator;
 
@@ -44,9 +45,9 @@ export default class LoginPanel extends cc.Component {
                 return;
             }
             if (response.inRoom) {
-                cc.director.loadScene("game");
+                SceneManager.loadScene("game");
             } else {
-                cc.director.loadScene("main");
+                SceneManager.loadScene("main");
             }
         }
     }

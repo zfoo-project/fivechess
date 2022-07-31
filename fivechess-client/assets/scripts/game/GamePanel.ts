@@ -8,6 +8,7 @@ import CheckoutResponse from "../tsProtocol/protocol/CheckoutResponse";
 import UserQuitResponse from "../tsProtocol/protocol/UserQuitResponse";
 import ReconnectInfoResponse from "../tsProtocol/protocol/ReconnectInfoResponse";
 import PlayerLostConnectResponse from "../tsProtocol/protocol/PlayerLostConnectResponse";
+import GiveChessRequest from "../tsProtocol/protocol/GiveChessRequest";
 
 const {ccclass, property} = cc._decorator;
 
@@ -41,8 +42,41 @@ export default class GamePanel extends cc.Component {
         NetManager.registerNetHandler(this);
     }
 
+    start() {
+        this.node_chess_disk.on(cc.Node.EventType.TOUCH_START, this.on_chessboard_click, this);
+    }
+
     onDestroy() {
         NetManager.unregisterNetHandler(this);
+    }
+
+    on_chessboard_click(event) {
+        event.stopPropagation();
+
+        if (this.sv_seatId == -1) {
+            cc.log("服务器未分配座位");
+            return;
+        }
+
+        if (this.cur_sv_id != this.sv_seatId) {
+            cc.log("不轮到你下棋");
+            return;
+        }
+
+        let w_pos = event.getLocation();
+        let pos = this.node_chess_disk.parent.convertToNodeSpaceAR(w_pos);
+
+        let xblock = Math.floor((pos.x + 0.5 * this.BLOCK_W) / this.BLOCK_W) + 7;
+        let yblock = Math.floor((pos.y + 0.5 * this.BLOCK_H) / this.BLOCK_H) + 7;
+
+        if (xblock < 0 || xblock > 14 || yblock < 0 || yblock > 14) {
+            return;
+        }
+
+        let request = new GiveChessRequest();
+        request.xBlock = xblock;
+        request.yBlock = yblock;
+        NetManager.sendMessage(request);
     }
 
     public turn_to_player(turnToSeatId) {
@@ -68,6 +102,29 @@ export default class GamePanel extends cc.Component {
 
             this.turn_to_player(response.seatId);
         } else if (protocolId == GiveChessResponse.prototype.protocolId()) {
+            let response: GiveChessResponse = packet;
+            if (response.status != 1) {
+                cc.error("下棋错误", response)
+                return;
+            }
+
+            let sp = null;
+            if (this.sv_seatId == this.button_id) {
+                sp = this.black_spriteframe;
+            } else {
+                sp = this.white_spriteframe;
+            }
+
+            let node = new cc.Node();
+            let s_comp = node.addComponent(cc.Sprite);
+            s_comp.spriteFrame = sp;
+
+            let xpos = (response.xBlock - this.CENTER_X) * this.BLOCK_W;
+            let ypos = (response.yBlock - this.CENTER_Y) * this.BLOCK_H;
+            this.node_chess_disk.addChild(node);
+            node.x = xpos;
+            node.y = ypos;
+            node.scale = 2;
 
         } else if (protocolId == CheckoutResponse.prototype.protocolId()) {
 

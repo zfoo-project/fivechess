@@ -20,6 +20,8 @@ export class NetManager {
     private static responseMsgQueue = [];
     private static responseHandlerSet = new Set();
 
+    private static lockMsgQueue: boolean = false;
+
     /**
      * 连接服务器
      */
@@ -50,7 +52,6 @@ export class NetManager {
             const packet = ProtocolManager.read(byteBuffer);
             byteBuffer.readBoolean();
 
-            console.log('recv:', packet);
             this.responseMsgQueue.push(packet);
         };
 
@@ -119,15 +120,25 @@ export class NetManager {
             return;
         }
 
-        let response = NetManager.responseMsgQueue.shift();
+        if (NetManager.lockMsgQueue) {
+            return;
+        }
+
+        let packet = NetManager.responseMsgQueue.shift();
+
+        console.log('recv:', packet);
 
         // 先是全局消息进行处理同步好服务器数据
-        GlobalMessageProcessManager.processResponse(response.protocolId(), response);
+        GlobalMessageProcessManager.processResponse(packet.protocolId(), packet);
 
         // 处理各个handler
         NetManager.responseHandlerSet.forEach(handler => {
             // @ts-ignore
-            handler.processResponse(response.protocolId(), response);
+            handler.processResponse(packet.protocolId(), packet);
         });
+    }
+
+    public static setLockMsgQueue(lockMsgQueue: boolean) {
+        this.lockMsgQueue = lockMsgQueue;
     }
 }

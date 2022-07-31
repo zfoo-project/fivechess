@@ -3,6 +3,7 @@ import CreateRoomRequest from "../tsProtocol/protocol/CreateRoomRequest";
 import CreateRoomResponse from "../tsProtocol/protocol/CreateRoomResponse";
 import JoinRoomRequest from "../tsProtocol/protocol/JoinRoomRequest";
 import JoinRoomResponse from "../tsProtocol/protocol/JoinRoomResponse";
+import SceneManager from "../common/SceneManager";
 
 const {ccclass, property} = cc._decorator;
 
@@ -34,12 +35,12 @@ export default class HallPanel extends cc.Component {
         if (protocolId == CreateRoomResponse.prototype.protocolId()) {
             let response: CreateRoomResponse = packet;
             if (response.status == 1) {
-                cc.director.loadScene("game");
+                SceneManager.loadScene("game");
             }
         } else if (protocolId == JoinRoomResponse.prototype.protocolId()) {
             let response: JoinRoomResponse = packet;
             if (response.status == 1) {
-                cc.director.loadScene("game");
+                SceneManager.loadScene("game");
             }
         }
     }
