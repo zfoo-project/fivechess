@@ -13,25 +13,6 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class GameController {
-    @EventReceiver
-    public void onServerSessionInactiveEvent(ServerSessionInactiveEvent event) {
-        Session session = event.getSession();
-        Long uid = session.getAttribute(AttributeType.UID);
-        if (uid == null) {
-            return;
-        }
-
-        Player player = PlayerManager.getPlayerByUid(uid);
-
-        Table table = TableManager.getTableByTableId(player.getTableId());
-
-        PlayerLostConnectResponse playerLostConnectResponse = new PlayerLostConnectResponse();
-        player.setSeatId(player.getSeatId());
-
-        table.broadcastMsgInTable(playerLostConnectResponse, player.getSeatId());
-    }
-
-
     @PacketReceiver
     public void atJoinRoomRequest(Session session, JoinRoomRequest request) {
         long uid = session.getAttribute(AttributeType.UID);
@@ -142,6 +123,24 @@ public class GameController {
         }
 
         table.turnToPlayer(next);
+    }
+
+    @EventReceiver
+    public void onServerSessionInactiveEvent(ServerSessionInactiveEvent event) {
+        Session session = event.getSession();
+        Long uid = session.getAttribute(AttributeType.UID);
+        if (uid == null) {
+            return;
+        }
+
+        Player player = PlayerManager.getPlayerByUid(uid);
+
+        Table table = TableManager.getTableByTableId(player.getTableId());
+
+        PlayerLostConnectResponse playerLostConnectResponse = new PlayerLostConnectResponse();
+        player.setSeatId(player.getSeatId());
+
+        table.broadcastMsgInTable(playerLostConnectResponse, player.getSeatId());
     }
 }
 

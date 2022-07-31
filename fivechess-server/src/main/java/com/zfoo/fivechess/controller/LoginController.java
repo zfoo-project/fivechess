@@ -26,22 +26,6 @@ public class LoginController {
     private IEntityCaches<String, UserEntity> userEntityCaches;
 
     /**
-     * 玩家下线
-     *
-     * @param event
-     */
-    @EventReceiver
-    public void onServerSessionInactiveEvent(ServerSessionInactiveEvent event) {
-        Session session = event.getSession();
-        Long uid = session.getAttribute(AttributeType.UID);
-        if (uid == null) {
-            return;
-        }
-
-        OnlineRoleManager.removeSessionByUid(uid);
-    }
-
-    /**
      * 玩家登录
      *
      * @param session
@@ -127,7 +111,22 @@ public class LoginController {
                 OnlineRoleManager.sendMessage(uid, reconnectInfoResponse);
             }
         }
+    }
 
+    /**
+     * 玩家下线
+     *
+     * @param event
+     */
+    @EventReceiver
+    public void onServerSessionInactiveEvent(ServerSessionInactiveEvent event) {
+        Session session = event.getSession();
+        Long uid = session.getAttribute(AttributeType.UID);
+        if (uid == null) {
+            return;
+        }
+
+        OnlineRoleManager.removeSessionByUid(uid);
     }
 }
 
