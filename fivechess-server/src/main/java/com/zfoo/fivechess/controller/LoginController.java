@@ -4,8 +4,9 @@ import com.zfoo.event.model.anno.EventReceiver;
 import com.zfoo.fivechess.common.ErrorCodeEnum;
 import com.zfoo.fivechess.common.OnlineRoleManager;
 import com.zfoo.fivechess.entity.UserEntity;
-import com.zfoo.fivechess.protocol.UnameLoginRequest;
-import com.zfoo.fivechess.protocol.UnameLoginResponse;
+import com.zfoo.fivechess.logic.*;
+import com.zfoo.fivechess.protocol.*;
+import com.zfoo.fivechess.protocol.common.ChessItem;
 import com.zfoo.fivechess.protocol.common.ErrorResponse;
 import com.zfoo.net.NetContext;
 import com.zfoo.net.core.tcp.model.ServerSessionInactiveEvent;
@@ -24,7 +25,11 @@ public class LoginController {
     @EntityCachesInjection
     private IEntityCaches<String, UserEntity> userEntityCaches;
 
-
+    /**
+     * 玩家下线
+     *
+     * @param event
+     */
     @EventReceiver
     public void onServerSessionInactiveEvent(ServerSessionInactiveEvent event) {
         Session session = event.getSession();
@@ -36,6 +41,12 @@ public class LoginController {
         OnlineRoleManager.removeSessionByUid(uid);
     }
 
+    /**
+     * 玩家登录
+     *
+     * @param session
+     * @param request
+     */
     @PacketReceiver
     public void atUnameLoginRequest(Session session, UnameLoginRequest request) {
         String uname = request.getUname();
@@ -70,12 +81,53 @@ public class LoginController {
         long uid = userEntity.getUid();
         OnlineRoleManager.bindUidSession(uid, session);
 
-        // 查询下
-        UnameLoginResponse response = new UnameLoginResponse();
-        response.setStatus(1);
-        response.setInRoom(true);
+        Player player = PlayerManager.getPlayerByUid(session.getAttribute(AttributeType.UID));
 
-        NetContext.getRouter().send(session, response);
+        boolean isInRoom = player != null;
+
+        UnameLoginResponse unameLoginResponse = new UnameLoginResponse();
+        unameLoginResponse.setStatus(Constant.eResponse_Ok);
+        unameLoginResponse.setInRoom(isInRoom);
+        OnlineRoleManager.sendMessage(uid, unameLoginResponse);
+
+        if (isInRoom) {
+            MySeatInfoResponse mySeatInfoResponse = new MySeatInfoResponse();
+            mySeatInfoResponse.setTableId(player.getTableId());
+            mySeatInfoResponse.setSeatId(player.getSeatId());
+            OnlineRoleManager.sendMessage(uid, mySeatInfoResponse);
+
+            Table table = TableManager.getTableByTableId(player.getTableId());
+            table.otherUsersArrivedToMyself(player, player.getSeatId());
+
+            UserArrivedResponse userArrivedResponse = new UserArrivedResponse();
+            userArrivedResponse.setSeatId(player.getSeatId());
+            table.broadcastMsgInTable(userArrivedResponse, player.getSeatId());
+
+            if (table.getStatus() == Constant.eTableState_Playing) {
+                ReconnectInfoResponse reconnectInfoResponse = new ReconnectInfoResponse();
+                reconnectInfoResponse.setButtonId(table.getButton_id());
+                reconnectInfoResponse.setSeatId(table.getCur_turn());
+
+                // 棋子信息
+                for (int y_block = 0; y_block < table.getChess_disk().length; y_block++) {
+                    for (int x_block = 0; x_block < table.getChess_disk()[y_block].length; x_block++) {
+                        int color = table.getChess_disk()[y_block][x_block];
+
+                        if (color > 0) {
+                            ChessItem chessItem = new ChessItem();
+                            chessItem.setxBlock(x_block);
+                            chessItem.setyBlock(y_block);
+                            chessItem.setColor(color);
+
+                            reconnectInfoResponse.getChessItems().add(chessItem);
+                        }
+                    }
+                }
+
+                OnlineRoleManager.sendMessage(uid, reconnectInfoResponse);
+            }
+        }
+
     }
 }
 

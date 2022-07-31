@@ -2,6 +2,7 @@ package com.zfoo.fivechess.common;
 
 import com.google.common.collect.Maps;
 import com.zfoo.net.NetContext;
+import com.zfoo.net.session.model.AttributeType;
 import com.zfoo.net.session.model.Session;
 import com.zfoo.protocol.IPacket;
 
@@ -15,7 +16,13 @@ public class OnlineRoleManager {
     private static final Map<Long, Session> uidSessionMap = Maps.newConcurrentMap();
 
     public static void bindUidSession(long uid, Session session) {
-        uidSessionMap.computeIfAbsent(uid, k -> session);
+        if (uidSessionMap.containsKey(uid)) {
+            return;
+        }
+
+        session.putAttribute(AttributeType.UID, uid);
+
+        uidSessionMap.put(uid, session);
     }
 
     public static void removeSessionByUid(long uid) {

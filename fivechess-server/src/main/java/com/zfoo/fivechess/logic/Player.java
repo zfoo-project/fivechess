@@ -12,12 +12,11 @@ public class Player {
 
     public Player(long uid) {
         this.uid = uid;
-
         this.tableId = -1;
         this.seatId = -1;
     }
 
-    public void sendMsg(IPacket packet){
+    public void sendMsg(IPacket packet) {
         OnlineRoleManager.sendMessage(uid, packet);
     }
 }

@@ -13,7 +13,7 @@ public class Constant {
     public static final int eChessColor_Black = 1;
     public static final int eChessColor_White = 2;
 
-    int eResponse_Ok = 1;
+    public static final int eResponse_Ok = 1;
 
     /**
      * 游戏状态
