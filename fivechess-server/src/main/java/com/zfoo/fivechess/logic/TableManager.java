@@ -1,14 +1,16 @@
 package com.zfoo.fivechess.logic;
 
-import com.google.common.collect.Maps;
+
+import com.zfoo.protocol.collection.CollectionUtils;
 
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class TableManager {
     private static final AtomicInteger globalTableId = new AtomicInteger(0);
 
-    private static final Map<Integer, Table> tableIdTableMap = Maps.newConcurrentMap();
+    private static final Map<Integer, Table> tableIdTableMap = new ConcurrentHashMap<>();
 
     public static int getNextTableId() {
         return globalTableId.getAndIncrement();

@@ -14,8 +14,8 @@ import com.zfoo.net.router.receiver.PacketReceiver;
 import com.zfoo.net.session.model.AttributeType;
 import com.zfoo.net.session.model.Session;
 import com.zfoo.orm.OrmContext;
+import com.zfoo.orm.cache.IEntityCaches;
 import com.zfoo.orm.model.anno.EntityCachesInjection;
-import com.zfoo.orm.model.cache.IEntityCaches;
 import com.zfoo.orm.util.MongoIdUtils;
 import com.zfoo.protocol.util.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -42,7 +42,7 @@ public class LoginController {
         UserEntity userEntity = userEntityCaches.load(uname);
 
         // 生成下账号
-        if (userEntity.checkNull()) {
+        if (userEntity.empty()) {
             long uid = MongoIdUtils.getIncrementIdFromMongoDefault(UserEntity.class);
 
             userEntity = new UserEntity();

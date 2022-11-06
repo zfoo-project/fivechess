@@ -9,7 +9,7 @@ import com.zfoo.orm.model.entity.IEntity;
 import lombok.Data;
 
 @Data
-@EntityCache(cacheStrategy = "tenThousand", persister = @Persister("time30s"))
+@EntityCache
 public class UserEntity implements IEntity<String> {
 
     /**

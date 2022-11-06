@@ -1,6 +1,6 @@
 package com.zfoo.fivechess.common;
 
-import com.google.common.collect.Sets;
+import com.zfoo.protocol.collection.CollectionUtils;
 import lombok.Getter;
 
 import java.util.Set;
@@ -18,7 +18,7 @@ public enum ErrorCodeEnum {
 
     static {
         // 检查重复errorCode
-        Set<Integer> set = Sets.newHashSet();
+        Set<Integer> set = CollectionUtils.newSet(ErrorCodeEnum.values().length);
         for (ErrorCodeEnum errorCodeEnum : values()) {
             if (!set.add(errorCodeEnum.errorCode)) {
                 throw new RuntimeException(errorCodeEnum.errorCode + "重复");

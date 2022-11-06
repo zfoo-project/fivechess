@@ -1,11 +1,10 @@
 package com.zfoo.fivechess.logic;
 
-import com.google.common.collect.Maps;
-
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class PlayerManager {
-    private static final Map<Long, Player> uidPlayerMap = Maps.newConcurrentMap();
+    private static final Map<Long, Player> uidPlayerMap = new ConcurrentHashMap<>();
 
     public static Player addPlayer(long uid) {
         if (uidPlayerMap.containsKey(uid)) {
